@@ -1,0 +1,560 @@
+<!-- start -->
+
+<!-- Container div, use the provided positioning and animation classes -->
+
+<!-- horizontal ad unit -->
+
+<div id = spec_table_wrapper> 
+	<div id='subject_wallpaper' style="background-image: url('/css/img/{{raw_info.nav_generalinfo.pt_subject}}.jpg');background-position: center top;">
+		
+			
+			<h1 class = 'subjectmain' style = 'font-size: 28px;'>
+				<a href='https://practicepractice.net/P/questions/{{raw_info.nav_generalinfo.pt_chapter}}/chapter/{{raw_info.nav_generalinfo.pt_chapter_unqiue_id}}' style='color:inherit;'>
+				{{raw_info.nav_displayinfo.pt_chapter_disp}}
+				</a>
+			</h1>
+		<div>
+			<!-- navigation links to next and previous  chapters-->
+			<a id='previous_page_butt' style='float: left;' href='{{next_prev_links.prev}}'>previous</a>
+			<a id='next_page_butt' style='float: right;' href='{{next_prev_links.next}}'>Next</a>
+		</div>
+	</div><br><br>
+	
+	
+	<br><br><br>
+	<div id='spec_table'> 
+	
+	
+		
+		<a id = 'go_to_top' href='#spec_table' id = 'go_to_top' style='font-weight: bolder;font-size: 16;color: red;'> ^^^ </a>
+		
+		
+		<div id = 'table_rowswrap' >
+			{%set subject = raw_info.nav_generalinfo.pt_subject %}
+			{%set moduel = raw_info.nav_generalinfo.pt_moduel %}
+			{%set chapter = raw_info.nav_generalinfo.pt_chapter %}
+			{%set pt_raw_information = raw_info.nav_generalinfo.pt_raw_information%}
+			{%set pt_raw_information_note = raw_info.nav_generalinfo.pt_raw_information_note %}
+			{%set pt_raw_information_specpoint = raw_info.nav_generalinfo.pt_raw_information_specpoint %}
+			{%set pt_chapter_unqiue_id = raw_info.nav_generalinfo.pt_chapter_unqiue_id %}
+			
+		
+			<li>
+				<section class ='specpoint_info'>
+					<section class='raw_spec_text_section' id='topic_objectices_{{pt_topic}}'>
+						<span class = 'specpoint_description'> 
+							
+							{%if user == 0%}
+							<input type="number" id="task_payment_amount" min="1" max="15" style='display:block;margin:auto;' placeholder="£ amount"><br>
+							<button style='display: block; margin:auto;' type='button' onclick = controller.C_AssignEditor('{{subject}}','{{moduel}}','{{chapter}}','task_payment_amount')>Assign an editor Content</button> <br><br>
+							{%endif%}
+							
+							
+							
+							{%if admin_review%}
+							<button style='display: block; margin:auto;' type='button' onclick = controller.C_admin_accept_work('{{editor_unique}}','{{subject}}','{{moduel}}','{{chapter}}')>Accept</button> <br>
+							<button style='display: block; margin:auto;' type='button' onclick = controller.C_admin_reject_work('{{editor_unique}}','{{subject}}','{{moduel}}','{{chapter}}')>Reject</button> <br><br>
+							{%endif%}
+							
+							
+							
+							
+							
+							{%if valid_editor%}
+							<button style='display: block; margin:auto;' type='button' onclick = controller.C_editor_submit_work('{{editor_unique}}','{{subject}}','{{moduel}}','{{chapter}}')>Submit work</button><br><br>
+							{%endif%}
+							
+							
+							{%if user < 4 or admin_review %}
+							<div class='raw_objectives_area' >
+								
+								<div class = 'objectives_headder' id = 'topic_officialspec'>
+									<h6>Official spec</h6>
+								</div>
+								
+								<div class='raw_objectives_notes'>
+									<ul>
+									
+										{%for key,value in pt_raw_information_note%}
+										{%for key,input in value%}
+											<li>{{input|raw}}</li>
+										{%endfor%}
+										{%endfor%}
+										
+									</ul>
+								
+								</div>
+								
+								<div class='raw_objectives_spec'>
+									<ul>
+										{%for key,value in pt_raw_information_specpoint%}
+										{%for key, input in value%}
+											<li>{{input|raw}}</li>
+										{%endfor%}
+										{%endfor%}
+									
+									</ul>
+								
+								</div>
+								{%if user == 0 or admin_review%}
+								<div class ='raw_spec_point_editing'>
+									{my_note} {/my_note} <br>
+									{my_specpoint} {/my_specpoint}
+									<textarea id='raw_spec_info_txt'>{{pt_raw_information}}</textarea>
+									<input type='hidden' id = 'raw_spec_info_subject' value = {{subject}} />
+									<input type='hidden' id = 'raw_spec_info_moduel' value = {{moduel}} />
+									<input type='hidden' id = 'raw_spec_info_chapter' value = {{chapter}} />
+									<button onclick=controller.C_update_raw_spec_info('raw_spec_info_subject','raw_spec_info_moduel','raw_spec_info_chapter','raw_spec_info_txt')>Update spec chapter point</button>
+								</div>
+								{%endif%}
+								
+								
+							</div>
+							{%endif%}
+						</span>
+					</section>
+				</section>
+			</li>
+			
+			
+			
+			
+			
+			
+			{% for key,row_arr in raw_info.table_info %}
+			<div class = 'table_row_wrapper'>
+				<div class='table_row'>
+					
+					<div class='points'>
+						
+						
+						{% for key,arrs in row_arr%}
+							{%if key == 'topic_info' %}
+								{% set pt_topic_num = arrs.pt_topic_num %}
+								{% set pt_topic = arrs.pt_topic %}
+								{% set pt_topic_disp = arrs.pt_topic_disp %}
+								{% set pt_unique_id = arrs.pt_unique_id %}
+						
+						
+								
+						
+						
+							
+							{% endif %}
+						
+						
+							{%if key == 'points' %}
+							
+							{%set points_counter = 0%}
+							{% for key, pt_info in arrs %}
+							
+							{% if user > 1%}
+								<div id='subject_wallpaper' style="background-image: url('/css/img/{{raw_info.nav_generalinfo.pt_subject}}.jpg');background-position: center top;height:75px;">
+									<h2 id='to_{{pt_topic}}' class = 'subjectmain' style = 'font-size: 22px;'>
+										{{pt_topic_disp}}
+									</h2>
+								</div>
+							{%else%}
+								<div id='subject_wallpaper' style="background-image: url('/css/img/{{raw_info.nav_generalinfo.pt_subject}}.jpg');background-position: center top;height:75px;">
+									<h2 id='to_{{pt_topic}}' class = 'subjectmain' style = 'font-size: 22px;'>
+										{{pt_topic}}
+									</h2>
+								</div>
+								
+							{%endif%}
+							
+							
+						
+							<!-- horizontal ad unit -->
+							<ins class="adsbygoogle"
+								 style="display:block;width: 95%;max-height: 200px;margin:auto;"
+								 data-ad-client="ca-pub-2758224133858397"
+								 data-ad-slot="6290886115"
+								 data-ad-format="auto"
+								 data-full-width-responsive="true">
+							</ins>
+							<ul id='points_ul'>
+								
+								
+						
+								
+							{% for key, point in pt_info %}
+							{%if (key != 'keywords') and (key != 'objectives')%}
+								{% set points_counter = points_counter + 1 %}
+							{%endif%}
+							{%endfor%}	
+								
+								
+							{% for key, point in pt_info %}
+								
+								{%if key == 'objectives' and user <2 %}
+								<li>
+									<section class ='specpoint_info'>
+										<section class='spec_text_section' id='topic_objectices_{{pt_topic}}'>
+											<div id = 'spec_text_infoArea'>
+												
+												
+												<div class='point_title specminimenu'>
+													<div id='point_title_number'>
+														A
+													</div>
+													<div id='point_title_info'>
+													
+													</div>
+												</div>
+												
+												
+												
+												<span class = 'specpoint_description'> 
+													<div class='objectives_area' >
+														<div class = 'objectives_headder'>
+															<h6>Learning objectives</h6>
+														</div>
+														<div class='objectives_body'>
+															<h6>After studying this topic, you should be able to: </h6>
+															{%for key, objective in point %}
+																<li>{{objective|capitalize}}</li>
+															{%endfor %}
+														</div>
+													</div>
+												</span>
+											</div>
+										</section>
+									</section>
+								</li>
+								{%endif%}
+								
+								
+								{%if key == 'keywords' and user <2%}
+								<li>
+									<section class ='specpoint_info'>
+										<section class='spec_text_section' id='topic_keywords_{{pt_topic}}'>
+											<div id = 'spec_text_infoArea'>
+												
+												
+												<div class='point_title specminimenu'>
+													<div id='point_title_number'>
+														B
+													</div>
+													<div id='point_title_info'>
+													
+													</div>
+												</div>
+												
+												
+												
+												
+												<span class = 'specpoint_description'> 
+													<div class='key_words_area' >
+														<div class = 'key_words_headder'>
+															<h6>Key Words</h6>
+														</div>
+														<div class='key_words_body'>
+															{%for key, word in point %}
+																<li><a >{{word|capitalize}}</a></li>
+															{%endfor %}
+														</div>
+													</div>
+												</span>
+											</div>
+										</section>
+									</section>
+								</li>
+								{%endif%}
+								
+								
+								
+								
+								
+								
+							{%if (key != 'keywords') and (key != 'objectives')%}
+							{% set pt_subject = point.pt_subject %}
+							{% set pt_id = point.pt_id %}
+							{% set pt_spec_id = point.pt_spec_id %}
+							{% set pt_unique_id = point.pt_unique_id %}
+							{% set pt_full_discription = point.pt_full_discription %}
+							{% set pt_short_discription = point.pt_short_discription %}
+							{% set pt_level = point.pt_level %}
+							{% set pt_discription = point.pt_discription %}
+							{% set pt_videos = point.pt_videos %}
+							{% set pt_keywords = point.pt_keywords %}
+							{% set pt_files_list = point.pt_files_list %}
+							{% set pt_number = point.pt_number %}
+							<li>
+								<section class ='specpoint_info'>
+									<section class='spec_text_section' id='point_{{pt_spec_id}}'>
+										<div id = 'spec_text_infoArea'>
+											<div class='point_title specminimenu' onclick =controller.C_toggle_minispecmenu('{{pt_id}}')>
+												<div id='point_title_number'>
+													{{pt_number}}  
+												</div>
+												<h3 id='point_title_info'>
+												{{pt_short_discription}} 
+												{%if pt_level is not empty%}
+													[{{pt_level}}]
+												{%endif%}
+												</h3>
+											</div>
+											
+											<div class = 'spec_point_menu_class' id='spec_pointmenu_{{pt_id}}'>
+												<div style='grid-area:A;' >ID -  </div>	 <a  style='grid-area:aa;'>{{pt_spec_id}}</a>
+												<div style='grid-area:B;' >Unique ID -  </div>  <p style = 'grid-area:bb' >{{pt_unique_id}} </p>
+												<h6 style ='grid-area:C;'> Flashcards - </h6>
+												<button style='grid-area:c;' type='submit' id='my_list_button_test' title='Add point to list' onclick=controller.C_create_flashcard('{{pt_unique_id}}') >Create</button>
+												
+											</div>
+											<br>
+											<section class = 'specpoint_description' id = 'DescriptionDisplay_{{pt_id}}'> 
+												{{pt_discription|raw}}
+											</section>
+										</div>
+										<div id = 'spec_video_infoArea'>
+											{% for key, arr in pt_videos %}
+												{% if arr.title and arr.link%}
+												<div class='yvid_wrapper spec_video_box_infoArea'>
+												<a class = 'internal_link' style='font-size: 20px;margin-bottom: 5px;' href='{{arr.link}}' target="_blank">  {{arr.title}}  </a>
+												<div class='yvid_youtube' data-embed='{{arr.link}}'>
+													<div class='yvid_play_button'></div>
+												</div>
+												</div>
+												{% endif %}
+											{% endfor %}
+										</div>
+									
+									{% if user == 0 or (valid_editor and user == 1) or writer_permission %}
+									<br><br><br>
+									<div class ='editing_wrapper'>
+										<div>
+											<p style = 'border-top: 2px solid black; padding-top:5px;text-align: center;'>
+											{point_title level='' pt_board='' }the title{/point_title} <br><br>
+											{my_vid vid_title = vid_link = 'youtube-embed-link' }{/my_vid} <br><br>
+											{my_img name='image.jpg' info='what it's about'}{/my_img}<br><br>
+											{my_objectives}Some learning objective{/my_objectives}<br><br>
+											{my_keyword}Some keyword{/my_keyword}<br><br>
+												Helpful documents<br><br>
+												<a href='https://www.ocr.org.uk/Images/308723-specification-accredited-a-level-gce-mathematics-a-h240.pdf'>| OCR Maths |</a>
+												<a href='https://qualifications.pearson.com/content/dam/pdf/A%20Level/Mathematics/2017/specification-and-sample-assesment/a-level-l3-mathematics-specification-issue4.pdf'>| EDX Maths |</a>
+												<a href='https://filestore.aqa.org.uk/resources/mathematics/specifications/AQA-7357-SP-2017.PDF'>| AQA Maths |</a>
+												<a href='https://www.ocr.org.uk/Images/171726-specification-accredited-a-level-gce-physics-a-h556.pdf'>| OCR Physics |</a>
+												<a href='https://qualifications.pearson.com/content/dam/pdf/A%20Level/Physics/2015/Specification%20and%20sample%20assessments/PearsonEdexcel-Alevel-Physics-Spec.pdf'>| EDX Physics |</a>
+												<a href='https://filestore.aqa.org.uk/resources/physics/specifications/AQA-8463-SP-2016.PDF'>| AQA Physics |</a>
+												<a href='https://www.ocr.org.uk/Images/171720-specification-accredited-a-level-gce-chemistry-a-h432.pdf'>| OCR Chemistry |</a>
+												<a href='https://qualifications.pearson.com/content/dam/pdf/A%20Level/Chemistry/2015/Specification%20and%20sample%20assessments/A_level_Chemistry_2015_Specification.pdf'>| EDX Chemistry |</a>
+												<a href='https://filestore.aqa.org.uk/resources/chemistry/specifications/AQA-7404-7405-SP-2015.PDF'>| AQA Chemistry |</a>
+												<a href='https://www.ocr.org.uk/Images/171736-specification-accredited-a-level-gce-biology-a-h420.pdf'>| OCR Biology |</a>
+												<a href='https://qualifications.pearson.com/content/dam/pdf/A%20Level/biology-a/2015/specification-and-sample-assessment-materials/9781446930885_GCE2015_A_BioA_spec.pdf'>| EDX Biology |</a>
+												<a href='https://filestore.aqa.org.uk/resources/biology/specifications/AQA-7401-7402-SP-2015.PDF'>| AQA Biology |</a><br><br>
+											</p>
+											<textarea  id='new_input_{{pt_id}}' placeholder='Edit the point discription' spellcheck='true' >{{pt_full_discription}}</textarea>
+											{%if valid_editor%}
+											<button type='button' onclick=controller.C_update_description_editor('{{pt_id}}') id='update_{{pt_id}}' style='display: block;margin-left:auto;'>Update </button><br>
+											{%else%}
+											<button type='button' onclick=controller.C_update_description('{{pt_id}}') id='update_{{pt_id}}' style='display: block; margin-left: auto;'>Update </button><br>
+											{%endif%}
+										</div>
+										<div>
+											{% for name in pt_files_list %}
+											<div>
+												{{name.name}} 
+												{%if valid_editor%}
+												<button  type='button' onclick=controller.C_delete_file_editor('{{pt_unique_id }}',"{{name.name}}") >Delete </button><br> 
+												{%else%}
+												<button  type='button' onclick=controller.C_delete_file('{{pt_unique_id }}',"{{name.name}}") >Delete </button><br> 
+												{%endif%}
+											</div>	
+											{% endfor %}
+										</div><br>
+										{%if valid_editor%}
+										<input type='file' name='file1_{{pt_id}}' id='file1_{{pt_id}}'><br>
+										<button type='button' onclick=controller.C_uploadFile_editor('{{pt_id}}')>Upload file</button>
+										<p id='loaded_n_total_{{pt_id}}'></p>
+										{%else%}
+										<input type='file' name='file1_{{pt_id}}' id='file1_{{pt_id}}'><br>
+										<button type='button' onclick=controller.C_uploadFile('{{pt_id}}')>Upload file</button>
+										<p id='loaded_n_total_{{pt_id}}'></p>
+										{%endif%}
+										<div>
+											{%if points_counter > 1%}
+												{%if valid_editor%}
+												<button id='delete_point_btn' type='submit' onclick=controller.C_remove_Spec_point_editor('{{pt_unique_id}}')> Delete this point</button>
+												{%else%}
+												<button id='delete_point_btn' type='submit' onclick=controller.C_remove_Spec_point('{{pt_unique_id}}')> Delete this point</button>
+												{%endif%}
+											{%endif%}
+										</div>
+										<div>
+											{%if valid_editor%}
+											<button id='add_point_btn' type='submit' onclick=controller.C_add_newSpec_point_editor('{{pt_unique_id}}')> add new below</button>
+											{%else%}
+											<button id='add_point_btn' type='submit' onclick=controller.C_add_newSpec_point('{{pt_unique_id}}')> add new below</button>
+											{%endif%}
+											
+										</div>
+									</div>
+									{% endif %}
+									</section>
+								</section> 
+							</li>
+							{% endif %}
+							{% endfor %}
+						</ul>
+						{% endfor %}
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+<!-- navigation links to next and previous  chapters-->
+<div id='subject_wallpaper' style="background-image: url('/css/img/{{raw_info.nav_generalinfo.pt_subject}}.jpg');background-position: center top;height: 75px;">
+	<!-- navigation links to next and previous  chapters-->
+	<a id='previous_page_butt' style='float: left;' href='{{next_prev_links.prev}}'>previous</a>
+	<a id='next_page_butt' style='float: right;' href='{{next_prev_links.next}}'>Next</a>
+</div>
+
+
+
+
+		</div>
+		<!-- naviation loop -->
+		{% set navhead_info = raw_info.nav_generalinfo %}
+		<div name ='spec_navigation' id = 'spec_navigation'>
+			<input type=hidden id='subject_input' value= '{{navhead_info.pt_subject}}'/>
+			<input type=hidden id='moduel_input' value= '{{navhead_info.pt_moduel}}'/>
+			<input type=hidden id='chapter_input' value= '{{navhead_info.pt_chapter}}'/>
+			<br><br>
+			<div class = 'nav_modueldisplay' >
+				
+				{% if user == 0 %}
+					<h2>{{navhead_info.pt_moduel}}</h2>
+					<input placeholder='update moduel name' id='m_{{navhead_info.pt_rename_pointer}}' /> <br>
+					<button onclick=controller.C_update_moduel('m_{{navhead_info.pt_rename_pointer}}')>Rename</button>
+					<button type='button' onclick=controller.C_add_newSpec_moduel('{{navhead_info.pt_subject}}','{{navhead_info.pt_moduel}}')>New_moduel</button>
+					<button id ='delete_button' onclick=controller.C_delete_moduel('{{navhead_info.pt_chapter_unqiue_id}}')>Delete moduel</button>
+					<br><Br>
+					<button onclick=controller.C_publish_moduel('{{navhead_info.pt_subject}}','{{navhead_info.pt_moduel}}')> Publish </button>
+					<button id ='delete_button' onclick=controller.C_unpublish_moduel('{{navhead_info.pt_subject}}','{{navhead_info.pt_moduel}}')> Un-Publish </button>
+				{%endif%}
+			</div>
+
+			
+			{% if user == 0 %}
+			<h6 id='great_parent' onclick = controller.C_toggle_children_visibility('{{navhead_info.pt_chapter}}')> {{navhead_info.pt_chapter}} </h6>
+			<br><input placeholder='update chapter name' id='c_{{navhead_info.pt_rename_pointer}}' /> <br>
+			<button type ='button' onclick=controller.C_update_chapter('c_{{navhead_info.pt_rename_pointer}}','{{navhead_info.pt_chapter}}')>Rename</button>
+			<button type = 'button' onclick=controller.C_add_newSpec_chapter('{{navhead_info.pt_chapter}}')>New_Chapter</button>
+			<button type = 'button' id ='delete_button' onclick=controller.C_delete_chapter('{{navhead_info.pt_chapter_unqiue_id}}')>delete_Chapter</button>
+			{%else%}
+				<!--<a id='great_parent' onclick = controller.C_toggle_children_visibility('{{navhead_info.pt_chapter}}')>Hide</a> -->
+			{%endif%}
+
+			<div class = 'chaptersWrap'>
+				{%if user < 4%}
+							<div class = 'chapter_wrapper'>
+								<div class = 'chapter_pointer childof_{{navhead_info.pt_chapter}} hidden_child' > </div>
+								<a class='pointer' href ='https://practicepractice.net/P/questions/{{raw_info.nav_generalinfo.pt_chapter}}/chapter/{{raw_info.nav_generalinfo.pt_chapter_unqiue_id}}' style='color: blue;font-size:15px;'>Practice Questions</a>
+								<a class='pointer childof_{{navhead_info.pt_chapter}} hidden_child' href ='#topic_officialspec'>Official Spec</a>
+							</div>
+				{%endif%}
+				{% for topic_name,info_points_arr in raw_info.table_info %}
+					{% for key,all_topics in info_points_arr %}
+						{%if key == 'points'%}
+							<div class = 'chapter_wrapper'>
+								{% for points in all_topics %}
+
+									{% for key,point in points %}
+									{%if (key != 'keywords') and (key != 'objectives')%}
+										{% set count_points = points|length %}
+										{% set pt_topic = point.pt_topic %}
+										{% set pt_spec_id = point.pt_spec_id %}
+										{% set pt_short_discription = point.pt_short_discription %}
+										{% set pt_level = point.pt_level %}
+										
+										{% if key == 0 %}
+
+											{% if user == 0  %}
+												<a class = 'chapter_pointer childof_{{navhead_info.pt_chapter}} hidden_child' >
+													{{point.pt_topic}} 
+												</a>
+												<br><input placeholder='update topic name' id='t_{{point.pt_unique_id}}' /><br>  
+												<button type='button' onclick=controller.C_update_topic('t_{{point.pt_unique_id}}','{{navhead_info.pt_chapter}}','{{point.pt_topic}}')>Rename</button>
+												<button onclick=controller.C_add_newSpec_topic('{{navhead_info.pt_chapter}}','{{point.pt_topic}}')>New_Topics</button>
+												{% if raw_info.table_info|length > 1 %}
+												<button id ='delete_button' onclick=controller.C_delete_topic('{{point.pt_unique_id}}')>Delete_Topic</button>
+												{% endif %}
+											{% elseif valid_editor %}
+												<a class = 'chapter_pointer childof_{{navhead_info.pt_chapter}} hidden_child' >
+													{{point.pt_topic}} 
+												</a>
+												<br><input placeholder='update topic name' id='t_{{point.pt_unique_id}}' /><br>  
+												
+												<button type='button' onclick="controller.C_update_topic_editor('t_{{point.pt_unique_id}}','{{navhead_info.pt_chapter}}','{{point.pt_topic}}')">Rename</button>
+												
+												<button onclick="controller.C_add_newSpec_topic_editor('{{navhead_info.pt_chapter}}','{{point.pt_topic}}')">New_Topics</button>
+												{% if raw_info.table_info|length > 1 %}
+												
+												<button id ='delete_button' onclick="controller.C_delete_topic_editor('{{point.pt_unique_id}}')">Delete_Topic</button>
+												
+												{% endif %}
+											{% else %}
+												<a class = 'chapter_pointer childof_{{navhead_info.pt_chapter}} hidden_child' >
+												{{point.pt_topic_disp}} </a>
+											{% endif %}
+											
+											{% if user < 2  %}
+											<a class='pointer childof_{{navhead_info.pt_chapter}} hidden_child' href ='#topic_objectices_{{pt_topic}}'>Learning objectives </a>
+											<a class='pointer childof_{{navhead_info.pt_chapter}} hidden_child' href ='#topic_keywords_{{pt_topic}}'>Keywords </a>
+											{%endif%}
+										{%endif%}
+										{% if user == 0  %}
+										<a class='pointer childof_{{navhead_info.pt_chapter}} hidden_child' href ='#point_{{pt_spec_id}}'>{{pt_spec_id}} - {{pt_short_discription}} 
+										{%if pt_level is not empty%}
+											[{{pt_level}}]
+										{%endif%}
+										</a> 
+										{%else%}
+										<a class='pointer childof_{{navhead_info.pt_chapter}} hidden_child' href ='#point_{{pt_spec_id}}'>
+											{{pt_short_discription}}
+											{%if pt_level is not empty%}
+											[{{pt_level}}]
+											{%endif%}
+										</a>
+										{%endif%}
+									{% endif %}
+									{% endfor %}
+								{% endfor %}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endfor %}
+			</div>
+		</div>
+	 
+	 
+	 
+	</div>
+</div>
+
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 

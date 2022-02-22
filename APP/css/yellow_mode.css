@@ -1,0 +1,114 @@
+
+.head a{
+	color: rgb(89,45,0);
+	
+}.head{
+	background:rgb(252, 245, 225);
+	border-top: 5px solid rgb(115, 84, 0);
+	
+}.headder{	
+	border-bottom: 2px solid rgb(115, 84, 0);
+}.site{
+	background: rgb(252, 245, 225);
+	border-color: rgb(115, 84, 0);
+}.main_content{
+	
+	background: rgb(252, 245, 225);
+	color: rgb(89,45,0);
+	
+}#spec_table #spec_navigation{
+	
+	border-bottom: 1px solid rgb(115, 84, 0);
+}.nav_modueldisplay{
+	border-bottom: 1px solid rgb(115, 84, 0);
+}.pointer{
+	color: rgb(89,45,0);
+	
+}.pointer:hover{
+	color: rgb(245, 124, 2);
+	
+	
+}.specminimenu{
+	color: rgb(181, 110, 38);
+}.specification_photos_desc{
+	background: rgb(150,150,150);
+	color: black;
+}.footer_wrapper{
+	background: rgb(252, 245, 225);
+	border-bottom: 1px solid  rgb(115, 84, 0);
+	border-top: 1px solid  rgb(115, 84, 0);
+}#style_toggel ul li{
+	transform: translateY(-60px);
+}#usr_nav_element,#signup form,#recovery form,#filter_questions,#editor_manager,#admin_controls,.paper_maker_wrap,.flash_practice{
+	color: black;
+	background: rgb(207, 193, 155); 
+}.table_row_wrapper:nth-child(odd){
+	background: rgb(252, 245, 225);
+}.table_row_wrapper:nth-child(even){
+	background: rgb(252, 245, 225);
+}.Chapters_listed{
+	background: rgb(207, 193, 155);
+	width: 95%;
+	
+}.Chapters_listed a {
+	color: rgb(89,45,0);
+	font-weight: 600;
+	text-decoration: underline;
+}.Chapters_listed a:hover {
+	color: rgb(245, 124, 2);
+}.topic_indicator{
+	color: rgb(89,45,0);
+}#chapter_indicator{
+	background: rgb(115, 84, 0);
+	color: rgb(252, 245, 225);
+}#moduel_indicator{
+	background: rgb(115, 84, 0);
+	color: rgb(252, 245, 225);
+}button,.button_anchor{
+	background: rgb(115, 84, 0);
+	color: white;
+}button:hover ,.button_anchor:hover{
+	background: rgb(209, 153, 0);
+	color: white;
+}.editing_wrapper{
+	background:  rgb(207, 193, 155);
+}textarea{
+	background:  rgb(252, 245, 225);
+}#current_page_highligh{
+	color: rgb(245, 141, 37);
+}#subject_nav ul a:hover{
+color: rgb(245, 141, 37);
+}.yvid_youtube {
+	background: rgb(161, 143, 95);
+}.specification_photos{
+	border: 2px solid rgb(115, 84, 0);
+}
+.specification_photos_desc{
+	grid-area: texta;
+	background: rgb(207, 193, 155);
+}
+.key_words_headder{
+	background: rgb(207, 193, 155);
+}.key_words_body li a{
+	color: rgb(89,45,0);
+}
+.objectives_headder{
+	background: rgb(207, 193, 155);
+}.objectives_body li {
+	color: rgb(89,45,0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

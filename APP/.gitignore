@@ -1,0 +1,10 @@
+specifications/**
+vendor/**
+cache_twig/**
+papers_pre/**
+cache/**
+junk/**
+questions/**
+users/**
+AI/Match/data/images/**
+!.gitignore

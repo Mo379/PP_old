@@ -1,0 +1,185 @@
+<style>
+	*{
+		margin:0px;
+		font-family: helvetica,arial,sans-serif;
+	}
+	body {
+		width: 210mm;
+		height:auto;
+		margin-left: auto;
+		margin-right: auto;
+		
+	}
+	.page{
+		display:block;
+		width:100%;
+		min-height:297mm;
+		max-height:297mm;
+		overflow:hidden;
+		position: relative;
+	}
+	.content_wrap{
+		border:1px dashed grey;
+		border-radius: 2px;
+		width:90%;
+		height:90%;
+		margin: 0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		padding: 10px;
+		padding-left: 20px;
+		padding-top: 20px;
+		overflow:hidden;
+	}
+	
+	.front_page{
+		display:grid;
+	}
+	
+	/*math jax */
+	.MathJax {
+		min-height: 30px;
+		max-width: 100%;
+		max-height: 100%;
+		padding: 0px;
+		margin: 0px;
+	}
+	mjx-container{
+		margin: 0px;
+	}
+
+	.writing_area{
+		width:100%;
+		min-height:297mm;
+		max-height:297mm;
+		display: grid;
+		grid-template-rows: auto;
+	}.line{
+		border-bottom: 1px dashed grey;
+	}
+
+</style>
+
+
+<body>
+	<div class = 'page'>
+		<div class = 'content_wrap'>
+			<h1 style ='text-align: center;'>PracticePractice.net</h1><br>
+			<h1>{{raw_info.disp_info.moduel}}</h1><br>
+			<h1>{{raw_info.disp_info.date}}</h1><br>
+			{% set mark_count = 0%}
+			{% set total_diff = 0%}
+			{%for key_q_num,question in raw_info.Questions%}
+				{%set head = question.head_info%}
+				{%set head_o = question.head_info[0]%}
+				{{key_q_num + 1}} - {{head.q_moduel_disp}} - {{head.q_chapter_disp}}....................[{{head_o.q_total_marks}}]<br><br>
+				
+				{%if total_diff > 0%}
+					{% set total_diff = total_diff + head_o.q_difficulty%}
+				{%else%}
+					{%set total_diff = head_o.q_difficulty%}
+				{%endif%}
+			{%endfor%}
+			<h1 style ='float:right;'>D [{{total_diff/raw_info.Questions|length}}]</h1><br>
+			<h1 style ='float:right;'>TOTAL [{{raw_info.disp_info.marks}}]</h1><br>
+			{%set url = "PracticePractice.net/P/paper_maker/"~user_unique~'/'~paper_unique %}
+			<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=http%3A%2F%2F{{url|url_encode}}&choe=UTF-8" title="Link to this paper" />
+
+		</div>
+
+	</div>
+{%for key_q_num,question in raw_info.Questions%}
+	{% set mark_count = 0%}
+	<div class = 'page'>
+		
+		<div class = 'content_wrap'>
+			<h1 style='text-align: center;font-size: 12px;'>solutions: PracticePractice.net/P/paper_maker/{{user_unique}}/{{paper_unique}}</h1>
+			<br>
+			<div  >
+			{%for key,disc in question.question_desc%}
+				<div >
+					{%if key != 'head'%}
+					<h3 style='display:inline-block;margin-bottom: 5px;'>
+						({{disc.part}})
+					</h3>
+					{%else%}
+					<h3 style='display:inline-block;margin-bottom: 5px;'>
+						[{{key_q_num + 1}}]
+					</h3>
+					{%endif%}
+					<div style='margin-bottom: 5px;'>
+						<p>
+							{{disc.my_question|raw}}
+						</p>
+					</div>
+					{%if key != 'head'%}
+					<div style='margin-bottom: 5px;float:right;'>
+						 [{{disc.part_mark}}]
+					</div>
+					{%endif%}
+					{% set mark_count = mark_count + disc.part_mark|number_format %}
+				</div>
+			{%endfor%}<br><br>
+				<div style='margin-bottom: 5px;margin-top: 10px;float:right;'>
+					<h4>[Total: {{mark_count}} Marks]</h4><br>
+					
+				</div>
+				<p style='font-size: 12px;'>{{question.q_origin}}</p>
+				<div class ='writing_area'>
+					{% for i in range(0, 30) %}
+						<h6 class ='line'></h6>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+{%endfor%}
+<div class = 'page'>
+		<div class = 'content_wrap'>
+			<div class ='writing_area'>
+				{% for i in range(0, 30) %}
+					<h6 class ='line'></h6>
+				{% endfor %}
+			</div>
+		</div>
+</div><div class = 'page'>
+		<div class = 'content_wrap'>
+			<div class ='writing_area'>
+				{% for i in range(0, 30) %}
+					<h6 class ='line'></h6>
+				{% endfor %}
+			</div>
+		</div>
+</div><div class = 'page'>
+		<div class = 'content_wrap'>
+			<div class ='writing_area'>
+				{% for i in range(0, 30) %}
+					<h6 class ='line'></h6>
+				{% endfor %}
+			</div>
+		</div>
+</div>
+	
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

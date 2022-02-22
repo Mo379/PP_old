@@ -1,0 +1,454 @@
+
+
+{% if util == 'chapter_progress_bar' and user < 3 %}
+<div id='myProgress' class='myProgress'>
+	<div id='myBar_val' class='myBar_val'>0%</div>
+	<div id='myBar' class='myBar'></div>
+</div><br>
+<script>
+setTimeout(function(){ controller.C_make_progress_bar('{{subject}}','{{moduel}}','{{chapter}}',''); }, 1000);
+</script>
+{%endif%}
+{% if util == 'verify_newuser' and u_vkey %}
+<div>
+	<button type='button' onclick=controller.C_verify_newuser('{{u_vkey}}')> Click me to verify </button>
+</div>
+{% endif %}	
+
+{% if util == 'user_login' and u_id == null %}
+<section id="sign-in">
+	<h1> Sign in </h1>
+	<div id = "usr_nav_element">
+		<input  type="text" id ='login_uid' name="uid" class="text_input" placeholder="username/email" ><br>
+		<input type="text" id ='login_pwd' name="pwd" class="text_input" placeholder="password" > <br>
+		<button type="submit" onclick="controller.C_user_login()" name="user_login"> login </button>
+	</div>
+</section>
+{%endif%}
+{% if util == 'admin_controls' and admin %}
+
+	<section id='admin_controls'>
+		<h1 id ='admin_controls_head'>Admin controls</h1>
+		<button type ='button'  onclick=view.straight_headder_redirect('/P/papers_pre') > Papers Pre</button>
+		
+		<br><br>
+		<button type ='button' onclick = controller.C_specpoint_DBprocessing() > Spec points processing</button>
+		<button type ='button' onclick = controller.C_question_DBprocessing() > Questions processing</button>
+		<button type ='button' onclick = controller.C_alert_editor_work() > Alert editors for work</button>
+		<br><Br>
+		<button type ='button' id = 'delete_button' onclick = controller.C_delete_cache() > Delete cache</button>
+		<button type ='button' id = '' onclick = controller.C_affiliate_payout() > Afilliates payout => ${{total_affiliate_payout}}</button>
+	</section>
+
+	{%if editors_information%}
+		<section id='editor_manager'>
+			<h1 id ='efitor_manager_head'>Editor manager</h1>
+
+
+			<div id='editors_nonsigned'>
+				<h2>Awaiting Signature</h2>
+
+				<div>
+					{%for key,info in editors_information%}
+						{%set user_unique_id = info.user_unique_id%}
+						{%set editors = info.editors%}
+						{%set contract_status = info.editors_contract_status%}
+						{%set approval = info.approved_editor%}
+						{%set email = info.user_email%}
+						{%set primary_subject = info.EditorPrimary_subject%}
+						{%set secondary_subject = info.EditorSecondary_subject%}
+
+
+						{%if editors == 1 and contract_status == 0 and approval == 0%}
+
+							<div>
+								{{user_unique_id}} - {{email}} - {{primary_subject}} - {{secondary_subject}} - Wait
+							</div>
+
+						{%endif%}
+					{% endfor %}
+				</div>
+
+			</div>
+
+
+
+
+			<div id='editors_signed'>
+				<h2>Awaiting approval</h2>
+				<div>
+					{%for key,info in editors_information%}
+						{%set user_unique_id = info.user_unique_id%}
+						{%set editors = info.editors%}
+						{%set contract_status = info.editors_contract_status%}
+						{%set approval = info.approved_editor%}
+						{%set email = info.user_email%}
+						{%set primary_subject = info.EditorPrimary_subject%}
+						{%set secondary_subject = info.EditorSecondary_subject%}
+
+						{%if editors == 1 and contract_status == 1 and approval == 0%}
+							<div>
+								{{user_unique_id}} - {{email}} - {{primary_subject}} - {{secondary_subject}}  - <button onclick=view.headder_redirect('http://practicepractice.net/P/hub?Editor_application_process=1&editor_unique_id={{user_unique_id}}')>Approve</button>
+							</div>
+						{%endif%}
+					{% endfor %}
+				</div>
+
+			</div>
+
+
+
+
+
+			<div id='editors_aproved'>
+				<h2>Approved</h2>
+
+				<div>
+					{%for key,info in editors_information%}
+						{%set user_unique_id = info.user_unique_id%}
+						{%set editors = info.editors%}
+						{%set contract_status = info.editors_contract_status%}
+						{%set approval = info.approved_editor%}
+						{%set email = info.user_email%}
+						{%set vkey = info.user_vkey%}
+						{%set primary_subject = info.EditorPrimary_subject%}
+						{%set secondary_subject = info.EditorSecondary_subject%}
+						{%if editors == 1 and contract_status == 1 and approval == 1%}
+							<div>
+								{{user_unique_id}} - {{email}} - {{primary_subject}} - {{secondary_subject}} -
+								<button onclick= view.headder_redirect('http://practicepractice.net/P/contract?editor_unique_id={{user_unique_id}}&editor_vkey={{vkey}}')>see contract</button>- 
+								<button id = 'delete_button' onclick=controller.C_editor_suspension('{{user_unique_id}}')>suspend</button> -
+								<button id = 'delete_button' onclick=controller.C_editor_cancel_contract('{{user_unique_id}}')>Cancel contract</button>
+							</div>
+						{%endif%}
+					{% endfor %}	
+
+				</div>
+
+			</div>
+		</section>
+	{%endif%}
+
+<section id='hire_section'>
+	<h1>Hire a new editor</h1>
+	<div id = 'usr_nav_element'>
+		<input id='user_unique_id' placeholder = 'User unique ID' />
+		<input id='E-mail' placeholder="User Email" />
+		<input id='EditorPrimary_subject' placeholder ='Primary subject' />
+		<input id='EditorSecondary_subject' placeholder="Secondary subject" /><br>
+		<button onclick=controller.C_hireuser('user_unique_id','E-mail','EditorPrimary_subject','EditorSecondary_subject')>Hire user</button>
+	</div>
+</section>
+
+<canvas id="impressions_chart" style='height: 40vh;width: 100%;' 
+></canvas>
+<script>
+setTimeout(function(){ controller.C_get_impressions_data()}, 1000);
+</script>
+{% endif %}
+
+
+
+
+{% if util == 'performance_chart' and member == 1%}
+<canvas id="performance_chart" style='height: 40vh;width: 100%;' 
+></canvas>
+<script>
+setTimeout(function(){ controller.C_get_performance_data()}, 1000);
+</script>
+{% endif %}	
+
+
+{% if util == 'question_history' and u_id and history_info  %}
+
+	<br><Br>
+	<h3 id='content_section_indic'>Most recent questions {Question difficulty - Mark percentage}</h3>
+	{%if history_info.0 is not empty%}
+	<div class ='question_history_grid' id='question_history'>
+		{%for question in history_info.0%}
+		{% set rgb = question.rgb%}
+		{% set diff = question.diff%}
+		{% set unique = question.unique%}
+		{% set ratio = question.mark_ratio%}
+		{% set pct = 100*ratio%}
+		<a class ='history_listings' style='background:{{rgb}};' onclick="controller.C_locate_question('{{unique}}')"> {{diff}} - {{pct}} %</a>
+		{%endfor%}
+	</div>
+	<br><Br>
+	{%endif%}
+		
+	{%if member == 1%}
+		<br><Br>
+		<h3 id='content_section_indic'>Spaced repetition questions (2 weeks ago) {Question difficulty - Mark percentage}</h3>	
+		{%if history_info.2 is not empty and member == 1%}
+		<div class ='question_history_grid' id='question_history'>
+			{%for question in history_info.2%}
+			{% set rgb = question.rgb%}
+			{% set diff = question.diff%}
+			{% set unique = question.unique%}
+			{% set ratio = question.mark_ratio%}
+			{% set pct = 100*ratio%}
+			<a class ='history_listings' style='background:{{rgb}};' onclick="controller.C_locate_question('{{unique}}')"> {{diff}} - {{pct}} %</a>
+			{%endfor%}
+		</div>
+		<br><Br>
+		{%endif%}		
+	{%endif%}		
+
+
+
+
+
+{% endif %}	
+
+{% if util == 'paper_history' and u_id and paper_info and member == 1  %}
+
+<br><Br>
+<h3 id='content_section_indic'>10 Most recent Papers</h3>
+<div class ='paper_history_grid' id='paper_history'>
+	{%for paper in paper_info%}
+	{% set p_user_unique = paper.user_unique%}
+	{% set paper_unique_id = paper.paper_unique%}
+	{% set subject = paper.subject%}
+	{% set marks = paper.score%}
+	{% set total_marks = paper.total_marks%}
+	{% set time = paper.attempt_time%}
+	{% set rgb = paper.rgb%}
+	{% set pct = paper.pct%}
+	<div class = 'paper_history_item'>
+		<div style='cursor:pointer;' onclick='view.straight_headder_redirect("https://www.practicepractice.net/P/paper_maker/{{p_user_unique}}/{{paper_unique_id}}")'>
+			<p>{{subject}} - {{marks}} / {{total_marks}} - {{time}} </p>
+			<br>
+			<div class = 'myProgress'>
+				<div  class = 'myBar_val'>{{pct}} %</div>
+				<div class = 'myBar' style="background: {{rgb}}; width: {{pct}}%;"></div>
+			</div>
+		</div>
+		<br><Br>
+		<button style='width:auto;height:auto;margin:auto;' onclick="controller.C_make_print_userpaper('{{p_user_unique}}','{{paper_unique_id}}')">Print</button>
+		
+	</div>
+	
+	{%endfor%}
+</div>
+
+{% endif %}	
+
+
+{% if util == 'apply_new_pwd_verified' and pwd_verified and vkey %}
+<div>
+	<input type ='hidden' name='vkey' id='new_pwd_vkey' value = '{{vkey}}' / >
+	<input name='password' id='new_pwd_password1' placeholder = 'Your new password' / >
+	<input name='password2' id='new_pwd_password2' placeholder = 'Re-password' / >
+	<button type='button' onclick=controller.C_register_new_pwd()> Update </button>
+</div>
+{% endif %}
+	
+	
+	
+	
+	
+{% if util == 'membership_req'%}
+{% set member = user_info_member.user_member_status%}
+<br><br><br><br>
+<h3 id='content_section_indic' style='font-size: 25px;'>
+	Plans and pricing
+</h3>
+<div id ='home_subject_selector'>
+
+	<div class = 'home_subject_box'>
+		<div class ='plans_price sub_shadow'>
+
+
+			<div class ='plan_head'>
+				<h3 id='content_section_indic' style='font-size: 25px;'>
+					Free <br><br>
+					<p style='font-size: 16px;'>£0</p>
+					<p style='font-size:14px;color:grey;'>Signup required</p>
+				</h3>
+			</div>
+
+
+			<div class ='plan_body'>
+				<li>✓ Access to all subjects</li>
+				<li>✓ Notes</li>
+					<li>✓ Links to related videos</li>
+					<li>✓ Past Papers</li>
+					<li>✓ Model answers</li>
+					<li>✓ Topic questions</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Chapter Progress tracking</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Question history</li>
+					<li style='height: 150px;'></li>
+			</div>
+
+			<div style='padding: 15px;'>
+				{%if user_info_member is null%}
+				<button class ='plan_button' style="width:100%;" onclick ="view.straight_headder_redirect('/P/sign_page')">Sign up</button>
+				{%elseif member == 0%}
+				 Thank you for Making an account, try the membership!
+				{%else%}
+				Thank you for becoming a member, we hope you enjoy our services.
+				{%endif%}
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class = 'home_subject_box'>
+		<div class ='plans_price sub_shadow'>
+
+
+			<div class ='plan_head' id='payment_disp'>
+				<h3 id='content_section_indic' style='font-size: 25px;'>
+					Subscriptions<br><br>
+					<p id = 'price_display' style='font-size: 16px;'>£{{mem_month}} /m</p>
+					<p style='font-size:14px;color:grey;'>Signup required</p>
+					<div >
+						<button id = 'month_button' style='background: green;color:white;' onclick ="controller.C_plan_disp(1,{{mem_month}})">1 month</button>
+						<button id = 'sixmonth_button' onclick ="controller.C_plan_disp(6, {{mem_sixmonths}})">6 months</button>
+						<button id = 'ninemonth_button'  onclick ="controller.C_plan_disp(9, {{mem_ninemonths}})">9 months</button>
+					</div>
+				</h3>
+			</div>
+			<div class ='plan_body'>
+				<li>✓ Notes</li>
+					<li>✓ Links to related videos</li>
+					<li>✓ Past papers</li>
+					<li>✓ Model answers</li>
+					<li>✓ Topic questions</li>
+					
+					
+					<li style='color:rgb(46, 137, 255);'>✓ Performance tracking</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Full Progress tracking</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Annotated Mindmap</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Paper maker tool</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Q-bank tool</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Paper print mode</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Question history</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Spaced repetition tool</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Sorted Past paper questions</li>
+					<li style='color:rgb(46, 137, 255);'>+ Anything new</li>
+					<li style='height: 150px;'></li>
+
+			</div>
+			<div style="font-size: 14px;text-align: center;">Subscription will <p style="display:inline-block;color:red;">NOT</p> renew automatically. None of your data will be lost; you can rejoin and still have your progress.</div>
+			<div style='padding: 15px;'>
+				<p></p>
+				{%if user_info_member is null%}
+				<button class ='plan_button' style="width:100%;height:100%;" onclick ="view.straight_headder_redirect('/P/sign_page')">Sign up</button>
+				{%elseif member == 0%}
+
+				 <button class ='plan_button' style="background: green;color:white; width:100%;height:100%;" onclick ="view.straight_headder_redirect('/P/checkout')">Join now</button>
+				{%else%}
+				Thank you for becoming a member, we hope you enjoy our services.
+				{%endif%}
+			</div>
+
+		</div>
+	</div>
+{%endif%}		
+	
+	
+	
+	
+{% if util == 'Checkoutform'%}
+{% set member = user_info_member.user_member_status%}
+<br><br><br><br>
+<h3 id='content_section_indic' style='font-size: 25px;'>
+	Checkout form
+</h3>
+<div id ='home_subject_selector' style='margin:auto;display:block'>
+
+	<div class = 'home_subject_box' style='width: 70%;'>
+		<div class ='plans_price sub_shadow'>
+
+			<div class ='plan_head' id='payment_disp'>
+				<h3 id='content_section_indic' style='font-size: 25px;'>
+					Subscriptions<br><br>
+					<p id = 'price_display' style='font-size: 16px;'>£{{mem_month}} /m</p>
+					<p style='font-size:14px;color:grey;'>Signup required</p>
+					<div >
+						<button id = 'month_button' style='background: green;color:white;' onclick ="controller.C_plan_disp(1,{{mem_month}})">1 month</button>
+						<button id = 'sixmonth_button' onclick ="controller.C_plan_disp(6, {{mem_sixmonths}})">6 months</button>
+						<button id = 'ninemonth_button'  onclick ="controller.C_plan_disp(9, {{mem_ninemonths}})">9 months</button>
+					</div>
+				</h3>
+			</div>
+			<div class ='plan_body_checkout'>
+				<div><input placeholder='Discount code' style='width: 150px;' id ='membership_discount_input'/> <button onclick='controller.C_apply_discount_code()'>Apply</button></div>
+				
+				<div class = 'subtotal_div'>
+					<li style='color:grey;padding: 5px;margin: 5px;' id='payment_subtotal' value='1'> Subtotal: £{{mem_month}}</li>
+					{%if membership_discount%}
+					<li style='color:grey;padding: 5px;margin: 5px;' id='payment_discount'>Discount: -{{membership_discount}}%</li>
+					{%endif%}
+					<li style='color:black;padding: 5px;margin: 5px;border-top: 1px solid grey;' id='payment_total'>Total will be displayed on the paypal checkout page</li>
+					
+				</div>
+			</div>
+			<div style="font-size: 14px;text-align: center;">Subscription will <p style="display:inline-block;color:red;">NOT</p> renew automatically and none of your data will be lost; you can rejoin and still have your progress.</div>
+			<br>
+			
+			
+			
+				{%if user_info_member is null%}
+				<img src = "/css/img/paypal_logo.png" style='width: 50%;margin:auto;'/>
+			
+				<div style='padding: 15px;'>
+				<p></p>
+				<button class ='plan_button' style="width:100%;height:100%;" onclick ="view.straight_headder_redirect('/P/sign_page')">Sign up</button>
+				{%elseif member == 0%}
+					<img src = "/css/img/paypal_logo.png" style='width: 50%;margin:auto;'/>
+					
+					<div style='padding: 15px;'>
+					<p></p>
+						
+					{%if payment_approval%}
+						{%set token = payment_approval.token%}
+						{%set payerid = payment_approval.PayerID%}
+
+						<button class ='plan_button' style="background: rgb(0, 157, 255);color:white; width:100%;height:auto%;" onclick=controller.C_finalise_membership_payment('{{token}}','{{payerid}}')>Pay £{{membership_total}}</button> <br>
+						<button class ='plan_button' style="background: rgb(0, 157, 255);color:white; width:100%;height:auto;" id='delete_button' onclick=controller.C_cancel_membership_payment()>Cancel payment</button> 
+					{%else%}
+						<button  class ='plan_button' style="background: rgb(0, 157, 255);color:white; width:100%;height:100%;" onclick=controller.C_initiate_membership_payment()>Pay-Pal checkout</button>
+					{%endif%}
+				{%else%}
+				Thank you for becoming a member, we hope you enjoy our services.
+				{%endif%}
+			</div>
+
+		</div>
+	</div>
+</div>
+{%endif%}	
+	
+	
+	
+	
+{% if util == 'affiliates_space'%}
+{% set affiliate = user_affiliate.affiliates%}
+{% set balance = user_affiliate.aff_bal%}
+{% set history = user_affiliate.aff_his%}
+<br><br><br><br>
+<h3 id='content_section_indic' style='font-size: 25px;'>
+	Affiliate balance
+</h3>
+	<div>
+		<div id = 'affiliate_balance'>£{{balance}}</div>
+		<div id = 'affiliate_history'>
+		{%for key,value in history%}
+			<li>{{value|raw}}</li><br>
+		{%endfor%}
+		
+		</div>
+	</div><br><br>
+
+{%endif%}	
+	
+	
+	
+	
+	
+	
+

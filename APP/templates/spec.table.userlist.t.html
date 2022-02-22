@@ -1,0 +1,123 @@
+<!-- start  to understand this use pen and paper and draw a diagram of loops and divs-->
+<h5 >Specification:  </h5>
+<div id = spec_table_wrapper> 
+	<div id='spec_table'> 
+		<a id = 'go_to_top' href='#spec_table' id = 'go_to_top'> ^^^ </a>
+		{% for key,subjects in raw_info%}
+		{% set current_subject = key %}
+		{% if entry_subject|lower == key|lower%}
+			{% for key,moduels in subjects%}
+			{% set current_moduel = key %}
+			<div id = 'moduel_wrapper' >
+				<a id='moduel_indicator'> {{entry_subject|capitalize}} - {{current_moduel}} </a>
+				{% for key,chapters in moduels%}
+				{% set current_chapter = key %}
+				<div id = 'table_rowswrap' >
+					<a id='chapter_indicator'> Chapter - {{current_chapter}} </a>
+					{% for key,topics in chapters%}
+					{% set current_topic = key %}
+					<div class = 'table_row_wrapper'>
+						<div class='table_row'> 
+							{% for key,points in topics%}
+							{% set points_key = key %}
+							<div class='points'>
+								{% for key,point in points%}
+								{% set current_point_number = key %}
+								
+								{% if key == 0%}
+								<a id='topic_indicator'> Part {{point.pt_topic_num}} - {{current_topic}} </a>
+								{% endif%}
+								
+								<ul id='points_ul'>
+								{% set pt_subject = point.pt_subject %}
+								{% set pt_id = point.pt_id %}
+								{% set pt_spec_id = point.pt_spec_id %}
+								{% set pt_unique_id = point.pt_unique_id %}
+								{% set pt_full_discription = point.pt_full_discription %}
+								{% set pt_short_discription = point.pt_short_discription %}
+								{% set pt_discription = point.pt_discription %}
+								{% set pt_videos = point.pt_videos %}
+								{% set pt_files_list = point.pt_files_list %}	
+								{% set pt_number = point.pt_number %}	
+									<li>
+										<section class ='specpoint_info'>
+											<section class='spec_text_section' id='point_{{pt_spec_id}}'>
+												<div id = 'spec_text_infoArea'>
+													
+													
+													<div class='point_title specminimenu'  onclick =controller.C_toggle_minispecmenu('{{pt_id}}') >
+														<div id='point_title_number'>
+															{{pt_number}}
+														</div>
+														<div id='point_title_info'>
+															{{pt_short_discription}} 
+														</div>
+													</div>
+													
+													
+													
+													<div class = 'spec_point_menu_class' id='spec_pointmenu_{{pt_id}}'>
+														<div style='grid-area:A;' >ID -  </div>	 <a  style='grid-area:aa;'>{{pt_spec_id}}</a>
+														<div style='grid-area:B;' >Unique ID -  </div>  <p style = 'grid-area:bb' >{{pt_unique_id}} </a>
+														<h4 style ='grid-area:C;'> My list - </h4>
+														<div style='grid-area:D;' >View questions -  </div>  <button style = 'grid-area:dd' type='button' onclick=controller.C_see_questions('point','{{pt_unique_id}}')>See point questions</button>
+														<button style='grid-area:c;' type='submit' id='my_list_button_test' title='Add point to list' onclick=controller.C_personal_list('{{pt_unique_id}}',1) >Add</button>
+														<button style='grid-area:cc;' type='submit' id='my_list_button_test' title='Add point to list' onclick=controller.C_personal_list('{{pt_unique_id}}',0) >Remove</button>
+													{%if 0 == 1%}
+														<div style='grid-area:D;'> Find questions - </div>
+														<form style ='grid-area:dd;' action= '/P/viewer' method='get'>
+															<input type ='hidden' value ='5ccbdb3ad3' name = 'pourl'/>
+															<input type ='hidden' value ='Q' name = 'type'/>
+															<input type ='hidden' value ='1' name = 'page'/>
+															<input type='hidden' name='subject' value='{{pt_subject}}'/>
+															<input type='hidden' name='spec_point' value='{{pt_unique_id}}'>
+															<input type='hidden' name='filter_page' value='question_practice' readonly/>
+															<button type='submit' name = 'point_to_question' value = '1'> search bank</button>
+														</form>
+													{%endif%}
+														
+													</div>
+													<br>
+													<span class = 'specpoint_description' id = 'DescriptionDisplay_{{pt_id}}'> 
+													{{pt_discription|raw}}
+													</span>
+												</div>
+												<div id = 'spec_video_infoArea'>
+													{% for key, arr in pt_videos %}
+														{% if arr.title and arr.link%}
+														<div class='yvid_wrapper spec_video_box_infoArea'>
+														<p>  {{arr.title}}  </p>
+														<div class='yvid_youtube' data-embed='{{arr.link}}'>
+															<div class='yvid_play_button'></div>
+														</div>
+														</div>
+														{% endif %}
+													{% endfor %}
+												</div>
+											</section>
+										</section>
+									</li>
+									
+								</ul>
+								{% endfor %}
+								
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				{% endfor %}
+			</div>
+			{% endfor %}
+		{%endif%}
+		{% endfor %}
+		
+		
+		
+		
+		<div name ='spec_navigation' id = 'spec_navigation'>
+		</div>
+	</div>
+</div>
+<!-- end -->

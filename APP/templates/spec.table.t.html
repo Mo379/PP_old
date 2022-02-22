@@ -1,0 +1,213 @@
+<div id = 'table_rowswrap' >
+	{% for key,row_arr in raw_info.table_info %}
+	<div class = 'table_row_wrapper'>
+		<div class='table_row'> 
+			<div class='points'>
+				
+				
+				{% for key,arrs in row_arr%}
+					{%if key == 'topic_info' %}
+						{% set pt_chapter = arrs.fil %}
+						{% set pt_topic = arrs.pt_topic %}
+					{% endif %}
+				
+				
+				
+					{%if key == 'points' %}
+					{% for key, pt_info in arrs %}
+					
+				<a id='topic_indicator'> Part {{pt_chapter}} - {{pt_topic}} </a> 
+				<ul id='points_ul'>
+					{% for key, point in pt_info %}
+					
+					{% set pt_subject = point.pt_subject %}
+					{% set pt_id = point.pt_id %}
+					{% set pt_spec_id = point.pt_spec_id %}
+					{% set pt_unique_id = point.pt_unique_id %}
+					{% set pt_full_discription = point.pt_full_discription %}
+					{% set pt_short_discription = point.pt_short_discription %}
+					{% set pt_discription = point.pt_discription %}
+					{% set pt_videos = point.pt_videos %}
+					{% set pt_files_list = point.pt_files_list %}
+					
+					
+					
+					
+					<li>
+						<section class ='specpoint_info'>
+							<section class='spec_text_section' id='point_{{pt_spec_id}}'>
+								<div id = 'spec_text_infoArea'>
+									<p class='point_title specminimenu' onclick =controller.C_toggle_minispecmenu('{{pt_id}}')>
+									{{pt_spec_id}} ) {{pt_short_discription}} 
+									</p>
+									<div class = 'spec_point_menu_class' id='spec_pointmenu_{{pt_id}}'>
+										<div style='grid-area:A;' >ID -  </div>	 <a  style='grid-area:aa;'>({{pt_spec_id}}) </a>
+										<div style='grid-area:B;' >Unique ID -  </div>  <p style = 'grid-area:bb' >{{pt_unique_id}} </a>
+										<h4 style ='grid-area:C;'> My list - </h4>
+										<button style='grid-area:c;' type='submit' id='my_list_button_test' title='Add point to list' onclick=controller.C_personal_list('{{pt_unique_id}}',1) >Add</button>
+										<button style='grid-area:cc;' type='submit' id='my_list_button_test' title='Add point to list' onclick=controller.C_personal_list('{{pt_unique_id}}',0) >Remove</button>
+										<div style='grid-area:D;'> Find questions - </div>
+										<form style ='grid-area:dd;' action= '/main/viewer.php' method='get'>
+											<input type ='hidden' value ='5ccbdb3ad3' name = 'pourl'/>
+											<input type ='hidden' value ='Q' name = 'type'/>
+											<input type ='hidden' value ='1' name = 'page'/>
+											<input type='hidden' name='subject' value='{{pt_subject}}'/>
+											<input type='hidden' name='spec_point' value='{{pt_unique_id}}'>
+											<input type='hidden' name='filter_page' value='question_practice' readonly/>
+											<button type='submit' name = 'point_to_question' value = '1'> search bank</button>
+										</form>
+										<div style='grid-area:E;'> Create_question - </div>
+										<form style='grid-area:ee;' action= '/main/q_maker.php' method='get'>
+											<input type='hidden' name='spec_point' value='{{pt_unique_id}}'>
+											<button type='submit' name = 'q_maker_button' value = '1'> Create question</button>
+										</form> 
+									</div>
+									<br>
+									<span class = 'specpoint_description' id = 'DescriptionDisplay_{{pt_id}}'> 
+									{{pt_discription|raw}}
+									</span>
+								</div>
+								<div id = 'spec_video_infoArea'>
+									{% for key, arr in pt_videos %}
+										{% if arr.title and arr.link%}
+										<div class='yvid_wrapper spec_video_box_infoArea'>
+										<p>  {{arr.title}}  </p>
+										<div class='yvid_youtube' data-embed='{{arr.link}}'>
+											<div class='yvid_play_button'></div>
+										</div>
+										</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+							</section>
+
+							<br><br><br>
+							<div class ='editing_wrapper'>
+								<p style = 'border-top: 2px solid black; padding-top:5px;'>
+								List of specific html elements: (edit out the {} for <>)<br><br>
+								{my_vid vid_title = vid_link = 'youtube-embed-link' }{/my_vid} <br><br>
+								{my_img name='image.jpg' info='what it's about'}{/my_img}<br><br>
+
+								</p>
+								<textarea  id='new_input_{{pt_id}}' placeholder='Edit the point discription' spellcheck='true' >{{pt_full_discription}}</textarea>
+								<button type='button' onclick=controller.C_update_description('{{pt_id}}') id='update_{{pt_id}}' style='float:right;'>Update </button><br>
+
+								<div>
+									{% for name in pt_files_list %}
+									<div>
+										{{name.name}} 
+										<button  type='button' onclick=controller.C_delete_file('{{pt_unique_id }}','{{name.name}}') >Delete </button><br> 
+									</div>	
+									{% endfor %}
+								
+								
+								
+								</div><br>
+
+								<input type='file' name='file1_{{pt_id}}' id='file1_{{pt_id}}'><br>
+								<button type='button' onclick=controller.C_uploadFile('{{pt_id}}')>Upload file</button>
+								<p id='loaded_n_total_{{pt_id}}'></p>
+								<div>
+									<button id='delete_point_btn' type='submit' onclick=controller.C_remove_Spec_point('{{pt_unique_id}}')> Delete this point</button>
+								</div>
+								<div>
+									<button id='add_point_btn' type='submit' onclick=controller.C_add_newSpec_point('{{pt_unique_id}}')> add new below</button>
+								</div>
+							</div>
+						</section> 
+					</li>
+					{% endfor %}
+				</ul>
+				{% endfor %}
+				{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+<!-- naviation loop -->
+{% set navhead_info = raw_info.nav_generalinfo %}
+<div name ='spec_navigation' id = 'spec_navigation'>
+	<input type=hidden id='subject_input' value= '{{navhead_info.pt_subject}}'/>
+	<input type=hidden id='moduel_input' value= '{{navhead_info.pt_moduel}}'/>
+	<input type=hidden id='chapter_input' value= '{{navhead_info.pt_chapter}}'/>
+	<br><br>
+	<div class = 'nav_modueldisplay' >
+		Moduel - {{navhead_info.pt_moduel}} <br>
+		<input placeholder='update moduel name' id='m_{{navhead_info.pt_rename_pointer}}' /> <br>
+		<button onclick=controller.C_update_moduel('m_{{navhead_info.pt_rename_pointer}}')>Rename</button>
+		<button type='button' onclick=controller.C_add_newSpec_moduel('{{navhead_info.pt_subject}}')>New_moduel</button>
+		<button id ='delete_button' onclick=controller.C_delete_moduel('{{navhead_info.pt_moduel_directory}}')>Delete moduel</button>
+	</div>
+	
+	{% set chapter_num = raw_info.nav_generalinfo.pt_chapter_num %}
+	{% set chapter_name = raw_info.nav_generalinfo.pt_chapter %}
+	{% set moduel_name = raw_info.nav_generalinfo.pt_moduel %}
+	{% set pt_unique_id = raw_info.nav_generalinfo.pt_unique_id %}
+	<a id='great_parent' onclick = controller.C_toggle_children_visibility('{{chapter_name}}')>Chapter {{chapter_num}} - {{chapter_name}} </a>
+	<br><input placeholder='update chapter name' id='c_{{navhead_info.pt_rename_pointer}}' /> <br>
+	<button type ='button' onclick=controller.C_update_chapter('c_{{navhead_info.pt_rename_pointer}}','{{chapter_name}}')>Rename</button>
+	<button type = 'button' onclick=controller.C_add_newSpec_chapter('{{chapter_name}}')>New_Chapter</button>
+	<button type = 'button' id ='delete_button' onclick=controller.C_delete_chapter('{{pt_unique_id}}')>delete_Chapter</button>
+	<br><br>
+	
+	<div class = 'chaptersWrap'>
+		{% for topic_name,info_points_arr in raw_info.table_info %}
+			{% for key,all_topics in info_points_arr %}
+				{%if key == 'points'%}
+					<div class = 'chapter_wrapper'>
+						{% for points in all_topics %}
+							
+							{% for key,point in points %}
+							{% set count_points = points|length %}
+							{% set pt_topic = point.pt_topic %}
+							{% set pt_spec_id = point.pt_spec_id %}
+							{% set pt_short_discription = point.pt_short_discription %}
+						
+							{% if key == 0 %}
+								<h1 class = 'chapter_pointer childof_{{chapter_name}} hidden_child' >
+								  Part {{point.pt_chapter_number}} - {{point.pt_topic}} 
+								<br><input placeholder='update topic name' id='t_{{point.pt_unique_id}}' /><br>  
+								<button type='button' onclick=controller.C_update_topic('t_{{point.pt_unique_id}}','{{chapter_name}}','{{point.pt_topic}}')>Rename</button>
+								<button onclick=controller.C_add_newSpec_topic('{{chapter_name}}','{{point.pt_topic}}')>New_Topics</button>
+								<button id ='delete_button' onclick=controller.C_delete_topic('{{point.pt_unique_id}}')>Delete_Topic</button>
+								</h1><br>
+							{%endif%}
+							
+							<a class='pointer childof_{{chapter_name}} hidden_child' href ='#point_{{pt_spec_id}}'>{{pt_spec_id}} - {{pt_short_discription}} </a> <br>
+							{% endfor %}
+						{% endfor %}
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endfor %}
+	</div>
+</div>
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 

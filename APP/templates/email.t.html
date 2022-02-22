@@ -1,0 +1,104 @@
+{%set message = message %}
+<style>
+	*{
+		font-family: helvetica,arial,sans-serif;
+	}
+	.headder{
+		margin: 0 auto 0 auto ;
+		padding: 7px;
+		border-bottom: 2px solid rgb(210, 210, 210);
+		margin-bottom: 15px;
+	}
+
+	.logo{
+		margin:auto;
+		width: 100%;
+		font-size: 2.0em ;
+		color:black;
+		text-decoration: none;
+		text-align: left;
+	}.logo *{
+		color:black;
+		text-decoration: none;
+	}
+	#text_logo{
+		
+		text-align: center;
+		margin:auto;
+		
+	}
+	#A{
+		width: 100%;
+		height: 100%;
+		background:white;
+	}
+	
+	/* footer */
+	.footer_wrapper{
+		width: 100%;
+	}
+
+	.footer{
+		margin: 50px auto 50px auto ;
+		max-width: 1024px;
+		display: grid;
+		grid-template-columns: 0.5fr 1fr 0.5fr;
+		grid-template-rows: 1fr 1fr;
+		grid-template-areas: 
+			'. links .'
+			'. copyright .';
+		border-top: 2px solid rgb(210, 210, 210);
+		margin-top: 15px;
+	}
+
+	#footer_navigation ul a{
+		display: inline-block;
+		color: black;
+	}#footer_navigation ul a:hover{
+		color: red;
+	}#footer_navigation ul {
+		text-align: center;
+	}#footer_navigation{
+		grid-area: links;
+	}
+
+
+	#footer_copyright a{
+		display: inline-block;
+		color: black;
+	}#footer_copyright a:hover{
+		color: red;
+	}
+	#footer_copyright{
+		grid-area: copyright;
+		text-align: center;
+		margin-top: 15px;
+	}
+
+
+
+</style>
+
+<body>
+<div class="headder" >
+	<div class = "logo">
+		<h4 id = "text_logo"> <a href="https://practicepractice.net">PracticePractice </a></h4>
+	</div>
+</div>
+<br>
+<div id='A'>
+
+{{message|raw}}
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</body>

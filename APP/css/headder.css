@@ -1,0 +1,113 @@
+.head{
+	display:grid;
+	grid-template-rows: 11.326fr  0fr;
+	grid-template-areas: 
+		"headder"
+		" . ";
+	border-top: 5px solid grey;
+	padding-top: 5px;
+}
+.head a{
+	color: black;
+	
+}
+
+
+.headder_wrapper{
+	min-width: 320px;
+	max-height: 250px;
+	width: 100%;
+	grid-area: headder;
+	color: black;
+
+}
+
+
+.headder{
+	margin: 0 auto 0 auto ;
+	max-width: 1024px;
+	display: grid;
+	
+	padding: 7px;
+	border-bottom: 2px solid rgb(210, 210, 210);
+}
+
+.logo{
+	margin:auto;
+	width: 100%;
+	grid-area: logo;
+	font-size: 2.0em ;
+	text-align: left;
+}
+
+#headder_user_nav{
+	height: ;
+	width:100%;
+	grid-area: controls;
+	display:flex;
+	flex-direction: row;
+	text-align: center;
+	
+}
+#headder_user_nav form {
+	margin:auto;
+}
+#headder_user_nav a {
+	margin:auto;
+}
+
+
+
+
+
+
+
+.nav_bar{
+	margin: 0 auto 0 auto ;
+	max-width: 1024px;
+	display: block;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+#subject_nav{
+	border-bottom: 1px solid black;
+}
+#subject_nav ul{
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+	flex-wrap:  wrap;
+	
+}
+#subject_nav ul a{
+	margin: auto;
+	padding: 4px;
+	border-radius: 2px;
+}#subject_nav ul a:hover{
+	color: red;
+}
+#subject_nav ul a li{
+	
+}
+
+#flow_navigation{
+	padding: 5px;
+	padding-left: 15px;
+	padding-top: 10px;
+	font-size: 12px;
+}
+#flow_navigation a{
+	color: red;
+}
+
+
+
+
+
+
+
+
+
+
+

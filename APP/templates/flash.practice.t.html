@@ -1,0 +1,33 @@
+<h3 id='content_section_indic' style='margin-top: 100px;'>Flash Practice</h3>
+
+{%for fc_k,flashcard in raw_info%}
+{%if fc_k == 0%}
+	<div class='flash_practice' id='view_fc_{{fc_k}}' style='display:grid;'>
+{%else%}
+	<div class='flash_practice' id='view_fc_{{fc_k}}' style='display:none;'>
+{%endif%}
+
+	<div class='fp_viewq' id = 'view_question' onclick='controller.C_toggle_fp_answer("view_answer_{{fc_k}}")'>
+		{{flashcard.fc_question}}
+	</div>
+	
+	<div class='fp_viewans' id = 'view_answer_{{fc_k}}' style='visibility: hidden;'>
+		{{flashcard.fc_answer}}
+	</div>
+	
+	<div class='fp_marking' style='background: rgb(66, 245, 69);'>
+		<div class = 'fp_correct' onclick = "controller.C_mark_fc(1,'{{flashcard.id}}','{{fc_k}}')">
+			&check;
+		</div>
+		
+		<div class = 'fp_wrong' style='background: rgb(245, 66, 66);' onclick = "controller.C_mark_fc(0,'{{flashcard.id}}','{{fc_k}}')">
+			X
+		</div>
+	</div>
+	
+</div>
+
+
+
+{%endfor%}
+</div>

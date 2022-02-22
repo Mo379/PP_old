@@ -1,0 +1,93 @@
+{%set user = user%}
+<div id='subject_wallpaper' style="background-image: url('/css/img/Questions.jpg');background-position: center top;">
+	<h1 class = 'subjectmain' style = 'font-size: 28px;'>
+		{{raw_info.disp_info.moduel}} practice
+	</h1>
+
+</div><br><br>
+{{raw_info.pagination|raw}}
+<div id = 'questions_wrapper'>
+	{%for key_q_num,question in raw_info.Questions%}
+		{% set mark_count = 0%}
+		<div id='question_wrapper'>
+			<div id = 'Question_Display_{{key}}' class='question_display'>
+				
+				{%for key,disc in question.question_desc%}
+					<div class ='question_area'>
+						
+						{%if key != 'head'%}
+						<h3 id = 'question_part'>
+							({{disc.part}})
+						</h3>
+						{%else%}
+						<h3 id = 'question_number'>
+							<a style = 'color:red;cursor:pointer' onclick=controller.C_locate_question('{{question.q_unique_id}}')>[{{key_q_num + 1}}]
+							</a>
+							
+							
+						</h3>
+						{%endif%}
+						<div id='question_content'>
+							<article>
+								<p>
+									{{disc.my_question|raw}}
+								</p>
+							</article>
+							
+							
+						</div>
+						
+						<div id ='loc_{{key_q_num}}_{{key}}' class='answer_content'>
+							<h2>Explanation</h2>
+							{% for key_ans,answer in question.answer_desc %}
+								{%if answer.part == disc.part %}
+									{{answer.my_answer|raw}}
+								{%endif%}
+							{%endfor%}
+						</div>
+						{%if key != 'head'%}
+						<div id ='question_part_mark'>
+							<a onclick=controller.C_toggle_answer('{{key_q_num}}_{{key}}')> [{{disc.part_mark}} Marks] </a>
+						</div>
+						{%endif%}
+						{% set mark_count = mark_count + disc.part_mark|number_format %}
+						
+					</div>
+					
+				{%endfor%}
+					{%if user <3 %}
+						{%if question.marking_info != ''%}
+						<div id = 'question_marking'>
+								Status: <input class = 'marking_check' type="checkbox" onclick="return false;" checked="checked"/><br>
+								{% set pct = (question.marking_info.mark|number_format/mark_count)*100%}
+								Marks: {{question.marking_info.mark}}/{{mark_count}} - {{pct|round(0, 'ceil') }}%<br>
+								Last marked: {{question.marking_info.time}}
+						</div>
+						{%else%}
+						<div id = 'question_marking'>
+								Status: <input class = 'marking_check' type="checkbox" onclick="return false;"/><br>
+						</div>
+						{%endif%}
+					{%endif%}
+					<div id ='question_total_mark'>
+						<h4>[Total: {{mark_count}} Marks]</h4><br><br>
+						<p style='font-size: 12px;'>{{question.q_origin}}</p>
+						{%if user < 3 %}
+						<div id ='marking_div'>
+							<button onclick = controller.C_mark_question('{{question.q_unique_id}}','{{mark_count}}')>Mark</button>
+							<select class='marking_select' id ='q_{{question.q_unique_id}}'>
+								{% for i in range(0, mark_count) %}
+									<option value='{{i}}'>{{ i }}</option>
+								{% endfor %}
+							</select>
+							
+						</div>
+							
+						{%endif%}
+					</div>
+			</div>
+			
+			
+		</div>	
+	{%endfor%}
+</div>

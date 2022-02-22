@@ -1,0 +1,28 @@
+<section id="sign-in">
+	<h1> Sign in </h1>
+	<div id = "usr_nav_element">
+		<input  type="text" id ='login_uid' name="uid" class="text_input" placeholder="username/email" ><br>
+		<input type="text" id ='login_pwd' name="pwd" class="text_input" placeholder="password" > <br>
+		<button type="submit" onclick="controller.C_user_login()" name="user_login"> login </button>
+	</div>
+</section>
+<section id="signup">
+	<h1> Sign up </h1>
+	<div id = "usr_nav_element">
+		<input type="text" name="uid" placeholder="custom user name" id = 'signup_username'><br>
+		<input type="text" name="first" placeholder="first name" id = 'signup_firstname'><br>
+		<input type="text" name="last" placeholder="last name" id = 'signup_lastname'><br>
+		<input type="text" name="email" placeholder="E-mail" id = 'signup_email1'><br>
+		<input type="text" name="re_email" placeholder="Re_E-mail" id = 'signup_email2'><br>
+		<input type="password" name="pwd" placeholder="password" id = 'signup_pwd1'><br>
+		<input type="password" name="re_pwd" placeholder="Re_password" id = 'signup_pwd2'><br>
+		<button type="button" onclick=controller.C_user_newsignup()> Sign up </button>
+	</div>
+</section>
+<section id="recovery">
+	<h1> Password recovery </h1>
+	<div id = "usr_nav_element">
+		<input type="text" name="email" id='user_pwdrecovery_email' placeholder="E-mail"><br>
+		<button type="button" name="pwd_recovery" onclick=controller.C_user_recover_password() > Recover </button>
+	</div>
+</section>

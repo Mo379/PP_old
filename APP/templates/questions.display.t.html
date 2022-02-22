@@ -1,0 +1,185 @@
+{%set filter = raw_info.general_info.filter%}
+{%set q_subject = raw_info.general_info.q_subject%}
+{%set q_moduel = raw_info.general_info.q_moduel%}
+{%set q_chapter = raw_info.general_info.q_chapter%}
+{%set q_topic = raw_info.general_info.q_topic%}
+{%set q_point = raw_info.general_info.q_point%}
+
+
+
+{%set user = user%}
+{%set admin_review = admin_review%}
+{%set valid_editor = valid_editor%}
+{%set editor_unique = editor_unique%}
+<div id='subject_wallpaper' style="background-image: url('/css/img/Questions.jpg');background-position: center top;">
+	<h1 class = 'subjectmain' style = 'font-size: 28px;'>
+		{{raw_info.disp_info.chapter}} {{raw_info.disp_info.topic}} {{raw_info.disp_info.point}}  practice
+	</h1>
+
+</div><br><br>
+
+{%if user == 0 or writer_permission%}
+<button onclick = controller.C_create_new_question('{{filter}}','{{q_subject}}','{{q_moduel}}','{{q_chapter}}','{{q_topic}}','{{q_point}}')>New question</button>
+{%elseif valid_editor%}
+	<button onclick = controller.C_create_new_question_editor('{{filter}}','{{q_subject}}','{{q_moduel}}','{{q_chapter}}','{{q_topic}}','{{q_point}}')>New question</button>
+{%endif%}
+
+<div>
+	{%if admin_review%}
+		<button style='display:block;margin:auto;' onclick = controller.C_accept_work_question('{{editor_unique}}','{{q_subject}}','{{q_moduel}}','{{q_chapter}}','{{q_topic}}','{{q_point}}')>Accept work</button><br>
+		<button style='display:block;margin:auto;' onclick = controller.C_reject_work_question('{{editor_unique}}','{{q_subject}}','{{q_moduel}}','{{q_chapter}}','{{q_topic}}','{{q_point}}')>Reject work</button>
+	{%elseif valid_editor%}
+		<button style='display:block;margin:auto;' onclick = controller.C_submit_work_question('{{q_subject}}','{{q_moduel}}','{{q_chapter}}','{{q_topic}}','{{q_point}}')>submit work</button>
+	{%endif%}
+</div>	
+<div id = 'questions_wrapper'>
+	{%if user == 0 and raw_info.Questions|length > 0%}
+	<div style='text-align: center;'>
+		<input type="number" id="task_payment_amount" min="1" max="15" style='display:block;margin:auto;' placeholder="£ amount"><br>
+		<button onclick=controller.C_assign_editor_question_section('{{filter}}','{{q_subject}}','{{q_moduel}}','{{q_chapter}}','{{q_topic}}','{{q_point}}','task_payment_amount')>Assign editor</button>
+	</div>
+	{%endif%}
+	
+	{%for key_q_num,question in raw_info.Questions%}
+		{% set mark_count = 0%}
+		<div id='question_wrapper'>
+			<div id = 'find_{{question.q_unique_id}}' class='question_display'>
+				{%for key,disc in question.question_desc%}
+					<div class ='question_area'>
+						
+						{%if key != 'head'%}
+						<h3 id = 'question_part'>
+							({{disc.part}})
+						</h3>
+						{%else%}
+						<h3 id = 'question_number'>
+							[{{key_q_num + 1}}]
+						</h3>
+						{%endif%}
+						<div id='question_content'>
+							<article>
+								<p>
+									{{disc.my_question|raw}}
+								</p>
+							</article>
+							
+							
+						</div>
+						
+						
+						<div id ='loc_{{key_q_num}}_{{key}}' class='answer_content'>
+							<h2 style='text-align:center;margin-bottom: 25px;'>Solution</h2>
+							{% for key_ans,answer in question.answer_desc %}
+								{%if answer.part == disc.part %}
+									{{answer.my_answer|raw}}
+								{%endif%}
+							{%endfor%}
+						</div>
+						{%if key != 'head'%}
+						<div id ='question_part_mark'>
+							<a onclick=controller.C_toggle_answer('{{key_q_num}}_{{key}}')> [{{disc.part_mark}} Marks] </a>
+						</div>
+						{%endif%}
+						
+					</div>
+					{% set mark_count = mark_count + disc.part_mark|number_format %}
+				{%endfor%}
+					{%if user <3 %}
+						{%if question.marking_info != ''%}
+						<div id = 'question_marking'>
+								Status: <input class = 'marking_check' type="checkbox" onclick="return false;" checked="checked"/><br>
+								{% set pct = (question.marking_info.mark|number_format/mark_count)*100%}
+								Marks: {{question.marking_info.mark}}/{{mark_count}} - {{pct|round(0, 'ceil') }}%<br>
+								Last marked: {{question.marking_info.time}}
+						</div>
+						{%else%}
+						<div id = 'question_marking'>
+								Status: <input class = 'marking_check' type="checkbox" onclick="return false;"/><br>
+						</div>
+						{%endif%}
+					{%endif%}
+					<div id ='question_total_mark'>
+						<h4>[Total: {{mark_count}} Marks]</h4><br><br>
+						<p style='font-size: 12px;'>{{question.q_origin}}</p>
+						{%if user < 3 %}
+						<div id = 'marking_div'>
+							<button onclick = controller.C_mark_question('{{question.q_unique_id}}','{{mark_count}}')>Mark</button>
+							<select class='marking_select' id ='q_{{question.q_unique_id}}'>
+								{% for i in range(0, mark_count) %}
+									<option value='{{i}}'>{{ i }}</option>
+								{% endfor %}
+							</select>
+							
+						</div>
+							
+						{%endif%}
+					</div>
+				
+				
+			{%if user == 0 or valid_editor or writer_permission%}
+				<div>
+					<div style='text-align: center;margin-bottom: 5px;'>
+					{my_q_head q_level='' q_origin='x' q_type='x' q_difficulty='0'}{/my_q_head} <br>
+					{my_question part='head,a,b,c...' part_mark='1'}
+					information
+					{/my_question}<br>
+					{my_answer part='head,a,b,c...'}
+					information
+					{/my_answer}<br>
+						{my_img name='image.jpg' info='what it's about'}{/my_img} <br>
+					https://isaurssaurav.github.io/mathjax-table-generator/
+					</div>
+					<textarea id='full_question_{{question.q_unique_id}}'>{{question.description}}</textarea>
+					{%if user == 0 or writer_permission%}
+						<button onclick=controller.C_update_question_info('{{question.q_unique_id}}') style='display: block; margin-left: auto;'>Update question</button>
+					{%elseif valid_editor%}
+						<button onclick=controller.C_update_question_info_editor('{{question.q_unique_id}}') style='display: block; margin-left: auto;'>Update question</button>
+					{%endif%}
+			{%endif%}
+			{%if (user <=1 or writer_permission) and paper_locator%}
+				{%if user ==1%}
+						 <div>
+				{%endif%}
+				<input placeholder="Destination point" id='reloc_{{question.q_unique_id}}' style='width: 150px;'/>
+				<button onclick=controller.C_relocate_question_files('{{question.q_unique_id}}') style='display: block;'>Relocate</button>
+				{%if user ==1%}
+						</div>
+				{%endif%}
+			{%endif%}
+			
+			{%if user == 0 or valid_editor or writer_permission%}	
+				</div>
+
+				<div>
+					{%for file in question.q_files_list%}
+					<p style='padding: 5px;'>{{file.name}}</p>
+					{%if user == 0 or writer_permission%}
+						<button  type='button' onclick=controller.C_delete_file_qs('{{question.q_unique_id}}',"{{file.name}}") >Delete </button><br> 
+					{%else%}
+					
+					{%endif%}
+					{%endfor%}
+					<input type='file' name='file1_{{question.q_unique_id}}' id='file1_{{question.q_unique_id}}'><br>
+					{%if user == 0 or writer_permission%}
+						<button type='button' onclick=controller.C_uploadFile_question('{{question.q_unique_id}}')>Upload file</button>
+					{%elseif valid_editor%}
+						<button type='button' onclick=controller.C_uploadFile_question_editor('{{question.q_unique_id}}')>Upload file</button>
+					{%endif%}
+				</div>
+
+
+				{%if (user == 0  or writer_permission) and raw_info.Questions|length > 1%}
+				<button id ='delete_button' class='delete_question_button' onclick=controller.C_delete_question('{{question.q_unique_id}}') style='display: block; margin-left: auto;'>Delete question</button>
+				{%elseif valid_editor and raw_info.Questions|length > 1%}
+				<button id ='delete_button' class='delete_question_button' onclick=controller.C_delete_question_editor('{{question.q_unique_id}}') style='display: block; margin-left: auto;'>Delete question</button>
+				{%endif%}
+				
+				
+				
+			{%endif%}
+			</div>
+			
+			
+		</div>	
+	{%endfor%}
+</div>

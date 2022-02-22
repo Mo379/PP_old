@@ -1,0 +1,47 @@
+version: "3.1"
+
+services: 
+  db_mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: db_mysql
+    networks: 
+      - practicepractice
+    environment:
+      MYSQL_ROOT_PASSWORD: Mustafa12211
+      MYSQL_DATABASE: site
+    ports:
+      - '3307:3306'
+    volumes: 
+      - $PWD/data/mysql_db:/var/lib/mysql
+  phpmyadmin:
+    depends_on:
+      - db_mysql
+    image: phpmyadmin
+    container_name: phpmyadmin
+    networks: 
+      - practicepractice
+    environment:
+      PMA_HOST: db_mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    ports:
+      - '8081:80'
+    links:
+      - db_mysql
+  old_practicepractice:
+    depends_on:
+      -  db_mysql
+    build: .
+    container_name: old_pp
+    networks: 
+      - practicepractice
+    ports:
+      - '8006:80'
+    volumes: 
+      - $PWD/APP:/var/www/html/
+      - $PWD/data/specifications:/var/www/html/specifications
+
+networks:
+    practicepractice:
+        external: true

@@ -1,0 +1,170 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	text-decoration: none;
+	list-style: none;
+	outline: none;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+
+
+
+textarea{
+	width: 90%;
+	height: 400px;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+	padding-left: 5px;
+	padding-top: 5px;
+	box-sizing: border-box;
+	
+    outline: none;
+	background: white;
+	border: solid 1px black;
+}
+
+html{
+	min-width: 320px;
+}
+
+img{
+	max-width: 100%;
+    /*max-height: 100%;*/
+}
+
+button,.button_anchor{
+	border:0;
+	outline:none;
+	background: silver;
+	margin: 5px;
+	padding: 3px;
+	text-align: center;
+	border-radius: 5px;
+	padding: 5px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+button:hover,.button_anchor:hover{
+	background: rgb(230, 230, 230);
+}
+
+.button_anchor{
+	color:black;
+	display:inline-block;
+	border:0;
+	outline:none;
+	background: silver;
+	margin: 5px;
+	padding: 3px;
+	text-align: center;
+	border-radius: 5px;
+	padding: 5px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.button_anchor:hover{
+	background: rgb(230, 230, 230);
+}
+
+form{
+	
+
+}
+
+input{
+	width: 60%;
+	height: 1.5em;
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	margin-left: 5px;
+}
+
+select{
+	width: 60%;
+	height: 30px;
+	margin-top: 5px;
+	margin-bottom: 15px;
+	margin-left: 5px;
+	border-radius: 0px;
+}
+
+
+
+
+/*math jax */
+.MathJax {
+	padding: 20px;
+	min-height: 50px;
+	max-width: 100%;
+	max-height: 100%;
+}
+/*math jax */
+.MathJax {
+	min-height: 30px;
+	max-width: 100%;
+	max-height: 100%;
+	padding: 0px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+mjx-container{
+	margin: 0px;
+}
+.MJX-TEX{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.CodeMirror{height:auto;}
+
+
+jmnode {
+	font-size: 12px;
+}
+

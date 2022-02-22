@@ -1,0 +1,24 @@
+{
+    "require": {
+        "realrashid/sweet-alert": "^2.0",
+        "phpmailer/phpmailer": "^6.1",
+        "composer/xdebug-handler": "^1.4",
+        "varunsridharan/sweetalert2-php": "^1.0",
+        "mathjax/mathjax": "^3.0",
+        "setasign/fpdf": "^1.8",
+        "setasign/fpdi": "^2.3",
+        "components/jquery": "^3.4",
+        "twig/twig": "^3.0",
+        "paypal/rest-api-sdk-php": "^1.14",
+        "spipu/html2pdf": "^5.2.1",
+        "tecnickcom/tcpdf": "^6.3.4",
+        "nicmart/tree": "^0.3.0",
+        "amnuts/opcache-gui": "^3.2"
+    },
+	
+	"autoload": {
+    "psr-4": {
+      "MVC\\":"classes/"
+    }
+  }
+}

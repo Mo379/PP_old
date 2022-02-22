@@ -1,0 +1,267 @@
+<div id='subject_wallpaper' style="background-image: url('/css/img/{{subject}}.jpg');">
+<h1 class = 'subjectmain' style = 'font-size: 28px;'>
+	A level {{subject}}
+</h1>
+</div>
+
+
+
+
+
+
+
+
+
+
+{%set sdg_rate = 200%}
+
+
+{%if admin%}
+<section id='tasks_section'>
+	<h2>Tasks list</h2>
+	<div id = 'usr_nav_element'>
+		
+		<div id='tasks_subsections'>
+			<h2>Listed</h2>
+					<div>
+					Question Classification  <button onclick = "view.headder_redirect('/P/classify.php')" >Work</button>
+					</div>
+			{%for key,task in active_tasks%}
+				{%if task.user_unique_id == null and task.editing_status == 0 and task.approval_status ==0 %}
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}} - ${{task.task_payment_amount}} - <button onclick = controller.C_unlist_editor_task('{{task.pt_subject}}','{{task.pt_moduel}}','{{task.pt_chapter}}')>Unlist</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id == null and task.editing_status == 0 and task.approval_status ==0 %}
+					<div>
+					Questions - {{task.q_moduel}} - {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}} - ${{task.task_payment_amount}} - <button onclick = controller.C_unlist_editor_task_question('{{task.q_subject}}','{{task.q_moduel}}','{{task.q_chapter}}','{{task.q_topic}}','{{task.q_point}}')>Unlist</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+		</div>
+
+
+		<div id='tasks_subsections'>
+			<h2>Picked up</h2>
+			{%for key,task in active_tasks%}
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 0 and task.approval_status ==0 %}
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}} - {{task.user_unique_id}}
+					</div> 
+				{%endif%}
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 0 and task.approval_status ==0 %}
+					<div>
+					Questions - {{task.q_moduel}} - {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}} - {{task.user_unique_id}}
+					</div> 
+				{%endif%}
+			{%endfor%}
+		</div>
+
+
+		<div id='tasks_subsections'>
+			<h2>Awaiting Review</h2>
+			{%for key,task in active_tasks%}
+				{%if task.user_unique_id is not same as (null) and  task.editing_status == 1 and task.approval_status ==0%}
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}} - {{task.user_unique_id}} -
+						<button onclick=controller.C_admin_review_redirect('{{task.user_unique_id}}','{{task.pt_subject}}','{{task.pt_moduel}}','{{task.pt_chapter}}')>Review</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id is not same as (null) and  task.editing_status == 1 and task.approval_status ==0%}
+					<div>
+					Questions - {{task.q_moduel}} - {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}} - {{task.user_unique_id}} -
+						<button onclick=controller.C_admin_review_redirect_question('{{task.user_unique_id}}','{{task.q_subject}}','{{task.q_moduel}}','{{task.q_chapter}}','{{task.q_topic}}','{{task.q_point}}')>Review</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+		</div>
+
+
+		<div id='tasks_subsections'>
+			<h2>Approved</h2>
+			{%for key,task in active_tasks%}
+				
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 1 and task.approval_status ==1 %}
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}} - {{task.user_unique_id}} - 
+						
+						{%if task.bnkak_status == 0%}
+						${{task.task_payment_amount}} -
+						{%else%}
+						SDG {{task.task_payment_amount * sdg_rate}} - [{{task.bnkak_number}}]
+						{%endif%}
+						
+						{%if task.bnkak_status == 0%}
+						<button onclick=controller.C_initiate_editor_payout('{{task.user_unique_id}}','{{task.pt_subject}}','{{task.pt_moduel}}','{{task.pt_chapter}}')>Process</button>
+						{%else%}
+						<button onclick=controller.C_initiate_editor_payout_bnkak('{{task.user_unique_id}}','{{task.pt_subject}}','{{task.pt_moduel}}','{{task.pt_chapter}}')>Bnkak Process</button>
+						{%endif%}
+					</div>
+					
+				{%endif%}
+					
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 1 and task.approval_status ==1 %}
+					<div>
+					Questions - {{task.q_moduel}} - {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}} - {{task.user_unique_id}} - 
+						
+						{%if task.bnkak_status == 0%}
+						${{task.task_payment_amount}} -
+						{%else%}
+						SDG {{task.task_payment_amount * sdg_rate}} - [{{task.bnkak_number}}]
+						{%endif%}
+						
+						{%if task.bnkak_status == 0%}
+						<button onclick=controller.C_initiate_editor_payout_question('{{task.user_unique_id}}','{{task.q_subject}}','{{task.q_moduel}}','{{task.q_chapter}}','{{task.q_topic}}','{{task.q_point}}')>Process</button>
+						{%else%}
+						<button onclick=controller.C_initiate_editor_payout_question_bnkak('{{task.user_unique_id}}','{{task.q_subject}}','{{task.q_moduel}}','{{task.q_chapter}}','{{task.q_topic}}','{{task.q_point}}')>Bnkak Process</button>
+						{%endif%}
+					</div>
+						
+				{%endif%}
+			{%endfor%}
+		</div>
+	</div>
+</section>
+{%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+{%if editor and (user.EditorPrimary_subject == subject or user.EditorSecondary_subject == subject) and user.approved_editor==1 %}
+
+<section id='tasks_section'>
+	<h2>Available tasks list</h2>
+	
+	<div id = 'usr_nav_element'>
+		<div id='tasks_subsections'>
+			<h2>Listed</h2>
+				<div>
+					Question Classification  <button onclick = "view.headder_redirect('/P/classify.php')" >Work</button>
+				</div>
+			{%for key,task in active_tasks%}
+				{%if task.user_unique_id == null and task.editing_status == 0 and task.approval_status ==0 %}
+					
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}} - 
+						{%if user.bnkak_id_verification == 0%}
+						${{task.task_payment_amount}} 
+						{%else%}
+						SDG {{task.task_payment_amount * sdg_rate}}
+						{%endif%}
+						- <button onclick = controller.C_editor_claimtask('{{user.user_unique_id}}','{{task.pt_subject}}','{{task.pt_moduel}}','{{task.pt_chapter}}')>Claim Task</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id == null and task.editing_status == 0 and task.approval_status ==0 %}
+					<div>
+					Questions - {{task.q_moduel}} - {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}} - 
+						
+						{%if user.bnkak_id_verification == 0%}
+						${{task.task_payment_amount}} 
+						{%else%}
+						SDG {{task.task_payment_amount * sdg_rate}}
+						{%endif%} 
+						
+						- <button onclick = controller.C_editor_claimtask_question('{{user.user_unique_id}}','{{task.q_subject}}','{{task.q_moduel}}','{{task.q_chapter}}','{{task.q_topic}}','{{task.q_point}}')>Claim Task</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+		</div>
+
+
+		<div id='tasks_subsections'>
+			<h2>Current task</h2>
+			{%for key,task in active_tasks%}
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 0 and task.approval_status ==0  and task.user_unique_id ==  user.user_unique_id%}
+					
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}} - <button onclick = controller.C_letEditor_work('{{user.user_unique_id}}','{{task.pt_subject}}','{{task.pt_moduel}}','{{task.pt_chapter}}')>Work</button> -<button id='delete_button' onclick = controller.C_editor_droptask('{{user.user_unique_id}}','{{task.pt_subject}}','{{task.pt_moduel}}','{{task.pt_chapter}}')>Drop task</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 0 and task.approval_status ==0  and task.user_unique_id ==  user.user_unique_id%}
+					
+					<div>
+					Questions - {{task.q_moduel}} - {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}} - <button onclick = controller.C_letEditor_work_question('{{user.user_unique_id}}','{{task.q_subject}}','{{task.q_moduel}}','{{task.q_chapter}}','{{task.q_topic}}','{{task.q_point}}')>Work</button> -<button id='delete_button' onclick = controller.C_editor_droptask_question('{{user.user_unique_id}}','{{task.q_subject}}','{{task.q_moduel}}','{{task.q_chapter}}','{{task.q_topic}}','{{task.q_point}}')>Drop task</button>
+					</div> 
+				{%endif%}
+			{%endfor%}
+		</div>
+
+
+		<div id='tasks_subsections'>
+			<h2>Awaiting Review</h2>
+			{%for key,task in active_tasks%}
+				{%if task.user_unique_id is not same as (null) and  task.editing_status == 1 and task.approval_status ==0%}
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}}
+					</div> 
+				{%endif%}
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id is not same as (null) and  task.editing_status == 1 and task.approval_status ==0%}
+					<div>
+					Questions - {{task.q_moduel}}- {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}}
+					</div> 
+				{%endif%}
+			{%endfor%}
+		</div>
+
+
+		<div id='tasks_subsections'>
+			<h2>Awaiting Processing</h2>
+			{%for key,task in active_tasks%}
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 1 and task.approval_status ==1 %}
+					<div>
+					Points - {{task.pt_moduel}} - {{task.pt_chapter}} - 
+						{%if user.bnkak_id_verification == 0%}
+						${{task.task_payment_amount}} 
+						{%else%}
+						SDG {{task.task_payment_amount * sdg_rate}}
+						{%endif%}
+					</div>
+				{%endif%}
+			{%endfor%}
+			
+			{%for key,task in active_tasks_questions%}
+				{%if task.user_unique_id is not same as (null) and task.editing_status == 1 and task.approval_status ==1 %}
+					<div>
+					Questions - {{task.q_moduel}} - {{task.q_chapter}} - {{task.q_topic}} - {{task.q_point}} - 
+						
+						{%if user.bnkak_id_verification == 0%}
+						${{task.task_payment_amount}} 
+						{%else%}
+						SDG {{task.task_payment_amount * sdg_rate}}
+						{%endif%}
+					</div>
+				{%endif%}
+			{%endfor%}
+		</div>
+	</div>
+</section>
+{%endif%}

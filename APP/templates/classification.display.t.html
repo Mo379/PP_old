@@ -1,0 +1,121 @@
+{%set user = user%}
+<div id='subject_wallpaper' style="background-image: url('/css/img/Questions.jpg');background-position: center top;">
+	<h1 class = 'subjectmain' style = 'font-size: 28px;'>
+	Classification: <p style='color:white;display:inline-block;'>{{raw_info.Questions.0.number_of_qs}}</p>
+	</h1>
+</div><br><br>
+<div id = 'questions_wrapper'>
+	{%for key_q_num,question in raw_info.Questions%}
+		
+		{% set mark_count = 0%}
+		<div id='question_wrapper'>
+			<div id = 'Question_Display_{{key}}' class='question_display'>
+				
+				{%for key,disc in question.question_desc%}
+					<div class ='question_area'>
+						
+						{%if key != 'head'%}
+						<h3 id = 'question_part'>
+							({{disc.part}})
+						</h3>
+						{%else%}
+						<h3 id = 'question_number'>
+							<a style = 'color:red;cursor:pointer' onclick=controller.C_locate_question('{{question.q_unique_id}}')>[{{key_q_num + 1}}]
+							</a>
+							
+							
+						</h3>
+						{%endif%}
+						<div id='question_content'>
+							<article>
+								<p>
+									{{disc.my_question|raw}}
+								</p>
+							</article>
+							
+							
+						</div>
+						
+						<div id ='loc_{{key_q_num}}_{{key}}' class='answer_content'>
+							<h2>Explanation</h2>
+							{% for key_ans,answer in question.answer_desc %}
+								{%if answer.part == disc.part %}
+									{{answer.my_answer|raw}}
+								{%endif%}
+							{%endfor%}
+						</div>
+						{%if key != 'head'%}
+						<div id ='question_part_mark'>
+							<a onclick=controller.C_toggle_answer('{{key_q_num}}_{{key}}')> [{{disc.part_mark}} Marks] </a>
+						</div>
+						{%endif%}
+						{% set mark_count = mark_count + disc.part_mark|number_format %}
+						
+					</div>
+					
+				{%endfor%}
+					
+					<div id ='question_total_mark'>
+						<h4>[Total: {{mark_count}} Marks]</h4><br><br>
+						<p style='font-size: 12px;'>{{question.q_origin}}</p>
+						{%if user < 3 %}
+						<div id ='marking_div'>
+							<button onclick = controller.C_mark_question('{{question.q_unique_id}}','{{mark_count}}')>Mark</button>
+							<select class='marking_select' id ='q_{{question.q_unique_id}}'>
+								{% for i in range(0, mark_count) %}
+									<option value='{{i}}'>{{ i }}</option>
+								{% endfor %}
+							</select>
+							
+						</div>
+							
+						{%endif%}
+					</div>
+			
+			{%if (user <= 1 or valid_editor or writer_permission)%}
+				<div>
+					<div style='text-align: center;margin-bottom: 5px;'>
+					{my_q_head q_level='' q_origin='x' q_type='x' q_difficulty='0'}{/my_q_head} <br>
+					{my_question part='head,a,b,c...' part_mark='1'}
+					information
+					{/my_question}<br>
+					{my_answer part='head,a,b,c...'}
+					information
+					{/my_answer}<br>
+						{my_img name='image.jpg' info='what it's about'}{/my_img} <br>
+					https://isaurssaurav.github.io/mathjax-table-generator/
+					</div>
+					<textarea id='full_question_{{question.q_unique_id}}'>{{question.description}}</textarea>
+					{%if user <= 1 or writer_permission%}
+						<button onclick=controller.C_update_question_info('{{question.q_unique_id}}') style='display: block; margin-left: auto;'>Update question</button>
+					{%elseif valid_editor%}
+						<button onclick=controller.C_update_question_info_editor('{{question.q_unique_id}}') style='display: block; margin-left: auto;'>Update question</button>
+					{%endif%}
+			{%endif%}
+			{%if (user <=1 or writer_permission)%}
+						  <div>
+				{%if user ==1%}
+						 <div>
+				{%endif%}
+				<input placeholder="Destination point" id='reloc_{{question.q_unique_id}}' style='width: 150px;'/>
+				<button onclick=controller.C_relocate_question_files('{{question.q_unique_id}}') style='display: block;'>Relocate</button>
+				{%if user ==1%}
+						</div>
+				{%endif%}
+			{%endif%}
+			</div>
+			
+			
+		</div>	
+		</div>
+
+		{%if user < 2%}
+		<div id = 'question_relocation_list'>
+		{%for chapter in question.all_chapters%}
+			<button  style ='font-size: 12px; height:50px;' onclick=controller.C_relocate_question_files2('{{question.q_unique_id}}','{{chapter.pt_unique_id}}') style='display: block;'>
+				Relocate: {{chapter.pt_moduel}} {{chapter.pt_chapter}}
+			</button>
+		{%endfor%}
+		{%endif%}
+	{%endfor%}
+</div>

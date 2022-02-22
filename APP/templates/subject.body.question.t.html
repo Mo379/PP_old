@@ -1,0 +1,131 @@
+{%if member == 1%}
+<div id = 'question_form_container'>
+	<a href="#flash_cards" id = 'flash_cards' style='color:red;'><h3 id='content_section_indic'>Flash cards</h3></a>
+	<div id = 'usr_nav_element' style='display:inline-block'>
+		<button type="button" onclick = view.headder_redirect("https://practicepractice.net/P/flashmanager/{{subject}}")>Manage</button> 
+		<button type="button" onclick = view.headder_redirect("https://practicepractice.net/P/flashpractice/{{subject}}") style='float:right;'>Practice</button> 
+	</div>
+	
+</div>
+
+<div id = 'question_form_container'>
+	<a href="#paper_maker" id = 'paper_maker' style='color:red;'><h3 id='content_section_indic'>Paper Maker</h3></a>
+	<div class = 'paper_maker_wrap'>	
+		<div class = 'maker_catagories'>
+			<li class ='maker_tabs' id='levels_tab' onclick = controller.C_maker_catagories('levels','levels_tab')>Exam moduels</li>
+			<li class ='maker_tabs' id='moduels_tab' onclick = "controller.C_maker_catagories_moduels('{{moduels|json_encode}}','moduels_tab')">Moduels</li>
+			<li class ='maker_tabs' id='chapters_tab' onclick = "controller.C_maker_catagories_chapters('{{subject}}','chapters_tab')">Chapters</li>
+			<li class ='maker_tabs' id='type_tab' onclick = controller.C_maker_catagories('type','type_tab')>Type</li>
+			<li class ='maker_tabs' id='difficulty_tab' onclick = controller.C_maker_catagories('difficulty','difficulty_tab')>Difficulty</li>
+			<li class ='maker_tabs' id='pastp_tab' onclick = controller.C_maker_catagories('pastpapers','pastp_tab')>Past papers</li>
+			
+		</div>
+		
+		<div class = 'maker_display'>
+			<div class='maker_display_window' id='maker_display'>
+				
+			</div>
+			
+			<div class='maker_display_selections' id ='maker_selections'>
+				<div class ='maker_display_option cq_subject' id ='disp_cq_subject' data-value='{{subject}}'> 
+					<p style='display: inline-block;'>{{subject}}</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class = 'maker_floor'>
+			<div>
+				<button onclick= "controller.C_get_practice_paper()">Practice</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id = 'question_form_container'>
+	<a href="#Q-bank" id = 'Q-bank' style='color:red;'><h3 id='content_section_indic'>Q-bank</h3></a>
+	<div id = 'usr_nav_element'>	
+
+		<div>
+			<h4> Select moduel: </h4>
+					<select name='point_topic' id='q_moduel_var' onchange = controller.C_update_topicField_selection_question('{{subject}}')> 
+					
+					<option selected="selected"></option>
+					{% for moduel in moduels %}
+						{%if moduel.value%}
+					<option value='{{moduel.value}}'>{{moduel.display}}</option>
+						{%endif%}
+					{% endfor %}
+					</select>
+		</div>
+	
+	
+	
+		<div>
+			<h4> Select chapter: </h4>
+			<select name='point_chapter' id='q_chapter_var'>
+				<option></option>
+			</select>
+		</div>
+		<script>
+		setTimeout(function(){  controller.C_run_update_refresh('{{subject}}'); }, 1250);
+		</script>
+	
+	
+	
+		<div>
+			<h4> Select question type:</h4>
+			<select name='qtype' id="qtype">
+				<option value = 'all'>All</option>
+				<option value = 'S'>Short</option>
+				<option value = 'M'>Medium</option>
+				<option value = 'L'>Long</option>
+			</select>
+		</div>
+	
+	
+	
+		<div>
+			<h4> Select question difficulty:</h4>
+				<select name='qdiff' id="qdiff">
+					<option value = 'all'>All</option>
+					<option value = '1'>1</option>
+					<option value = '2'>2</option>
+					<option value = '3'>3</option>
+					<option value = '4'>4</option>
+					<option value = '5'>5</option>
+				</select>
+		</div>
+		
+		<button type="button" onclick = controller.C_get_custom_practice('{{subject}}','q_moduel_var','q_chapter_var','qtype','qdiff')>Practice</button> 
+	</div>
+</div>
+{%endif%}
+
+
+
+<div id = 'question_form_container'>
+	<a href="#past-p" id = 'past-p' style='color:red;'><h3 id='content_section_indic'>Past papers</h3></a>
+	<div id = 'usr_nav_element'>	
+
+		<div>
+			<h4> Select Paper: </h4>
+					<select id='q_paper'> 
+					
+					<option selected="selected"></option>
+					{% for paper in papers %}
+						{%if paper.value%}
+					<option value='{{paper.value}}'>{{paper.display}}</option>
+						{%endif%}
+					{% endfor %}
+					</select>
+		</div>
+	
+	
+
+
+		
+		<button type="button" onclick = controller.C_direct_to_pastpaper('{{subject}}','q_paper')>Practice</button> 
+	</div>
+</div>
+

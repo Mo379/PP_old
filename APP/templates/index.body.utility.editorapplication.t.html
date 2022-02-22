@@ -1,0 +1,208 @@
+{% if util == 'editor_application' and editor and editor.editors_contract_status == 0  %}
+<section id="Editors_applicatoin_wrapper">
+	
+
+	
+	<section id='contract_document'>
+		{%set editor_name = editor.user_first ~ ' ' ~ editor.user_last%}
+		{%set editor_email = editor.user_email%}
+		
+		{% include 'index.body.utility.editorcontract.t.html' %}
+		
+		<br><br>
+		<div id='signature_confirmation_div'>
+			<input type="checkbox" id='signature_confirmation' name = 'signature_confirmation' unchecked>
+			<label for="signature_confirmation "> I ( {{editor_name}} ) agree to the terms stated above</label>
+		</div>
+		<br><br>
+		
+		<button id="submit_and_sign_button" type ='button' onclick=controller.C_submit_editorcontract('signature_confirmation')>Submit documents and sign contract</button>
+		
+	</section>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</section>
+{%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if util == 'editor_application_process' and editor_information %}
+{%set signature = editor_information.signature%}
+{%set ID = editor_information.id_link%}
+{%set qualification = editor_information.qualification_link%}
+{%set editor_unique_id = editor_information.editor_unique_id%}
+
+
+
+<section id="Editors_applicatoin_wrapper">
+
+	
+	<section id='contract_document'>
+		{%set editor_name = editor_information.editor_name%}
+		{%set editor_email = editor_information.editor_email%}
+		{% include 'index.body.utility.editorcontract.t.html' %}
+		
+		
+		
+		<div id='signature_confirmation_div'>
+			<input type="checkbox" id='signature_confirmation' name = 'signature_confirmation' unchecked>
+			<label for="signature_confirmation "> I agree to the terms</label>
+		</div>
+		
+		<br><br>
+		<button id="submit_and_sign_button" type ='button' onclick=controller.C_approve_editorcontract('{{editor_unique_id}}','signature_confirmation')>Submit documents and sign contract</button>
+		
+		
+	</section>
+</section>
+{%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% if util == 'compile_contract' and compile_contract_information %}
+{%set company_sign_time = compile_contract_information.company_sign_time%}
+{%set editor_sign_time = compile_contract_information.editor_sign_time%}
+{%set termination_time = compile_contract_information.termination_time%}
+
+
+<page id="Editors_applicatoin_wrapper">
+	<div id='contract_document'>
+		
+		{%set editor_name = compile_contract_information.editor_name %}
+		{%set editor_email = compile_contract_information.editor_email %}
+
+		{% include 'index.body.utility.editorcontract.t.html' %}
+		
+		<div id="company_signature_complete">
+			<!-- company Signature Canvas -->
+			Company signature: {{company_sign_time}}
+		</div>
+		
+		
+		
+		<div id="editor_signature_complete">
+			<!-- Client Signature Canvas -->
+			Editor signature: {{editor_sign_time}}
+		</div>
+		<h1>Contract termination status: {{termination_time}}</h1>
+		
+
+		
+	</div>
+</page>
+{%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

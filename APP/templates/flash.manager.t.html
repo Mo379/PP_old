@@ -1,0 +1,53 @@
+
+
+
+<h3 id='content_section_indic'>Flash Controls</h3>
+<div id='admin_controls'>
+	<button type ='button' id='delete_button'style='height: 30px;'  onclick=controller.C_reset_flashcards() >Reset Flashcards progress</button>
+</div>
+
+<h3 id='content_section_indic'>Flash Manager</h3>
+<div class ='flash_manager' id ='usr_nav_element'>
+
+{%for k_s,moduel in raw_info%}
+<ul class='fm_list'>
+	{%for k_m,chapter in moduel%}
+	
+	<li class = 'fm_moduel' id = 'moduel-{{k_m}}'>
+	<span class='expand' style='display:inline-block' onclick='controller.C_toggle_fm_item("chapter-{{k_m}}")'>+</span>
+	<span class='expand' style='display: none;'>-</span>	
+	<a>{{k_m}}</a>
+
+	<ul>
+		{%for k_c,topic in chapter%}
+		<li class='fm_chapter chapter-{{k_m}}' style='display:none;' >
+		<span class='expand' style='display:inline-block' onclick='controller.C_toggle_fm_item("topic-{{k_c}}")'>+</span>
+		<span class='expand' style='display: none;'>-</span>	
+		<a>{{k_c}}</a>
+
+		<ul>
+			{%for k_t,fcs in topic%}
+			<li class='fm_topic topic-{{k_c}}' style='display:none;' >
+			<span class='expand' style='display:inline-block' onclick='controller.C_toggle_fm_item("flash-{{k_t}}")'>+</span>
+			<span class='expand' style='display: none;'>-</span>
+			<a>{{k_t}} [{{fcs|length}}]</a>
+				<ul>
+				{%for k_fc,fc in fcs%}
+					<div class='fm_topic flash-{{k_t}}'  style='display:none;'>
+						<a>{{k_fc + 1}}</a>
+						<button onclick = "controller.C_view_flashcard('{{fc.id}}','{{fc.fc_question}}','{{fc.fc_answer}}')">View</button>
+						<button id='delete_button' onclick=controller.C_delete_flashcard('{{fc.id}}')>Delete</button>
+					</div>
+				{%endfor%}
+				</ul>
+			</li>
+			{%endfor%}
+		</ul>
+		</li>
+		{%endfor%}
+	</ul>
+	</li>
+	{%endfor%}
+</ul>
+{%endfor%}
+</div>

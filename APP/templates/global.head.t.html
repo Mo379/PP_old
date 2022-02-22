@@ -1,0 +1,93 @@
+<!--  -->
+<div class='head'>
+	<div class = 'headder_wrapper'>
+		<div class="headder" >
+			<div id='style_toggel'>
+			<ul id='style_togg_ul'>
+				<li>
+					<span>light</span>
+					<span>dark</span>
+					<span>yellow</span>
+				</li>
+			</ul>
+			</div>
+				<div class = "logo">
+					<h4 id = "text_logo"> <a href="/">Practice Practice </a></h4>
+				</div>
+				<div id="headder_user_nav">
+					{% if user %}
+						<button type="button" onclick=view.straight_headder_redirect('/P/hub')> Hub </button>
+						<button type="button" onclick=view.straight_headder_redirect('/P/user_profile')> Profile </button>
+						<button type="button" name="user_logout" onclick=controller.C_user_logoff()> Logout </button>					
+					{% else %}
+						<a id = "sign_up" href="/P/sign_page"> Sign-in/up  </a>
+					{% endif %}		
+				</div>	
+		</div>
+		<div class = "nav_bar" >
+			<div id="subject_nav">
+				<ul>
+					{% if page == 'Maths'%}
+						<a href="/P/maths"><li id="icon_maths"></li> <p id='current_page_highligh'> Maths</p> </a>
+					{%else%}
+						<a href="/P/maths"><li id="icon_maths"></li> <p> Maths</p> </a>
+					{%endif%}
+					{% if page == 'Physics'%}
+						<a href="/P/physics"><li id="icon_maths"></li> <p id='current_page_highligh'> Physics</p> </a>
+					{%else%}
+						<a href="/P/physics"><li id="icon_maths"></li> <p> Physics</p> </a>
+					{%endif%}
+					{% if page == 'Chemistry'%}
+						<a href="/P/chemistry"><li id="icon_maths"></li> <p id='current_page_highligh'> Chemistry</p> </a>
+					{%else%}
+						<a href="/P/chemistry"><li id="icon_maths"></li> <p> Chemistry</p> </a>
+					{%endif%}
+					{% if page == 'Biology'%}
+						<a href="/P/biology"><li id="icon_maths"></li> <p id='current_page_highligh'> Biology</p> </a>
+					{%else%}
+						<a href="/P/biology"><li id="icon_maths"></li> <p> Biology</p> </a>
+					{%endif%}
+					{% if page == 'Forums'%}
+						<!-- <a href="/P/forums"><li id="icon_maths"></li> <p id='current_page_highligh'> Forums</p> </a> -->
+					{%else%}
+						<!-- <a href="/P/forums"><li id="icon_maths"></li> <p> Forums</p> </a> -->
+					{%endif%}
+					{% if page == 'About'%}
+						<a href="/P/about"><li id="icon_maths"></li> <p id='current_page_highligh'> About</p> </a>
+					{%else%}
+						<a href="/P/about"><li id="icon_maths"></li> <p> About</p> </a>
+					{%endif%}
+					
+				</ul>
+			</div>
+			
+			<div id = 'flow_navigation'>
+				{%for key,link in nav_map%}
+					{%if key == 'Home'%}
+						Location : <a class='nav_map_links' href="{{link}}">{{key}}</a> 
+					{%else %}
+						{%if link =='#'%}
+							> {{key}}
+						{%else%}
+							> <a class='nav_map_links' href="{{link}}"> {{key}}</a> 
+						{%endif%}
+						 
+					{%endif%}
+					
+				{%endfor%}
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

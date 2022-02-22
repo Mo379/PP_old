@@ -1,0 +1,114 @@
+<head>
+	<meta http-equiv = "content-language" content = "en">
+	
+
+	{%set updater = '1.1'%}
+	
+	
+	{%if clean_title%}
+	<title> {{ clean_title }} </title>
+	{%else%}
+	<title> {{ page_name }} </title>
+	{%endif%}
+	
+	
+	<link  rel="icon" href="/css/img/main.png">
+	<meta charset="utf-8" />
+	<style>
+		body {
+			display: none;
+		}
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- mathjax local: <script type="text/javascript" src = "/vendor/components/jquery/jquery.js" ></script>-->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<meta name="description" content="{{meta_desc}}">
+	{% if page_name == 'Spec' or page_name == 'Questions' or page_name == 'Practice' or page_name == 'PastPapers' or page_name == 'Paper-Print' or page_name == 'Paper-Practice' or page_name=='Flashmanager' or page_name=='Flashpractice' or page_name=='Classify'%}
+		<!-- ads <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
+		{%if page_name != 'Spec'%}
+		<!-- mathjax local: <script src="/vendor/mathjax/mathjax/es5/tex-chtml.js" id="MathJax-script" async></script>-->
+		<script>
+			MathJax = {
+				tex: {
+					inlineMath: [['$', '$'], ['\\(', '\\)']]
+				},
+				options: {
+							includeHtmlTags: {         //  HTML tags that can appear within math
+								br: '', wbr: '', '#comment': ''
+							},
+							ignoreHtmlClass: 'tex2jax_ignore',    //  class that marks tags not to search
+							processHtmlClass: 'spec_text_section',  //  class that marks tags that should be searched
+							compileError: function (doc, math, err) {doc.compileError(math, err)},
+							typesetError: function (doc, math, err) {doc.typesetError(math, err)},
+						}
+			};
+		</script>
+		{%endif%}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.1.2/es5/tex-chtml.min.js" integrity="sha512-OEN4O//oR+jeez1OLySjg7HPftdoSaKHiWukJdbFJOfi2b7W0r0ppziSgVRVNaG37qS1f9SmttcutYgoJ6rwNQ==" crossorigin="anonymous"></script>
+		{% if blockcrawlers%}
+			<meta name="robots" content="noindex">
+		{%endif%}
+	{% endif %}
+	
+	{% if page_name == 'Maths' or page_name == 'Physics' or page_name == 'Chemistry' or page_name == 'Biology'%}
+		<!-- Mindmap -->
+		<link rel="stylesheet" type="text/css" href="/css/jsmind.css" />
+		<script type="text/javascript" src="/javascript/jsmind.js"></script>
+	
+	{% endif %}
+	
+	{% if page_name == 'Home' or page_name == 'Hub'%}
+		<!-- chart.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+	<link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"/>
+	{% endif %}
+	<!-- Sweetalert 2 : local:  <script src="/vendor/realrashid/sweet-alert/resources/js/sweetalert.all.js"></script>-->
+	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<link rel="stylesheet" type="text/css" href="/css/general.css" />
+	<link rel="stylesheet" type="text/css" href="/css/headder.css" />
+	<link rel="stylesheet" type="text/css" href="/css/content.css" />
+	<link rel="stylesheet" type="text/css" href="/css/layout.css" />
+	<link id='darkmode_css' rel="stylesheet"  type="text/css" href="/" />
+	
+	<script>
+	function getCookie(name) {
+		var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+		return v ? v[2] : null;
+	}
+	//
+	function remember() {
+		var con = this;
+		var usr_cookie = getCookie('css_mode');
+		var sheet = document.getElementById('darkmode_css');
+		//give cookie if none is set
+		if (!usr_cookie) {
+			document.cookie = 'css_mode=light;path=/';
+		}
+		//remember
+		if (usr_cookie == 'dark') {
+			$('#darkmode_css').attr('href', '/css/dark_mode.css');
+		} else if (usr_cookie == 'yellow') {
+			$('#darkmode_css').attr('href', '/css/yellow_mode.css');
+		} else {
+			$('#darkmode_css').attr('href', '#');
+		}
+	}
+	remember();
+	
+	</script>
+	<script type="text/javascript" src="/javascript/controller.js" async></script>
+	
+	
+	
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180846178-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180846178-1');
+</script>
+
+</head>

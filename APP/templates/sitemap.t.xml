@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+
+<url>
+
+  <loc>https://practicepractice.net/</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>1</priority>
+
+</url>
+	
+	
+<url>
+
+  <loc>https://practicepractice.net/P/maths</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.8</priority>
+
+</url><url>
+
+  <loc>https://practicepractice.net/P/physics</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.8</priority>
+
+</url><url>
+
+  <loc>https://practicepractice.net/P/chemistry</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.8</priority>
+
+</url><url>
+
+  <loc>https://practicepractice.net/P/biology</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.8</priority>
+
+</url>
+
+
+
+
+
+
+
+
+{%for chapter in raw_info_spec%}
+{% set subject = chapter.pt_subject %}
+{% set moduel = chapter.pt_moduel %}
+{% set chapter = chapter.pt_chapter %}
+
+
+<url>
+
+  <loc>https://practicepractice.net/P/Notes/{{subject}}/{{moduel}}/{{chapter}}</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.6</priority>
+
+</url>
+
+{%endfor%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%for questions in qs_chapter%}
+{%set subject = questions.pt_subject%}
+{%set moduel = questions.pt_moduel%}
+{%set chapter = questions.pt_chapter%}
+{%set pt_unique_id = questions.pt_unique_id%}
+{%set filter = 'chapter'%}
+
+
+<url>
+
+  <loc>https://practicepractice.net/P/questions/{{chapter}}/{{filter}}/{{pt_unique_id}}</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.4</priority>
+
+</url>
+{%endfor%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%for questions in qs_topic%}
+{%set subject = questions.pt_subject%}
+{%set moduel = questions.pt_moduel%}
+{%set chapter = questions.pt_chapter%}
+{%set topic = questions.pt_topic%}
+{%set pt_unique_id = questions.pt_unique_id%}
+{%set filter = 'topic'%}
+
+<url>
+
+  <loc>https://practicepractice.net/P/questions/{{topic}}/{{filter}}/{{pt_unique_id}}</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.4</priority>
+
+</url>
+{%endfor%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%for questions in qs_point%}
+{%set subject = questions.pt_subject%}
+{%set moduel = questions.pt_moduel%}
+{%set chapter = questions.pt_chapter%}
+{%set topic = questions.pt_topic%}
+{%set number = questions.pt_number%}
+{%set pt_unique_id = questions.pt_unique_id%}
+{%set filter = 'point'%}
+
+
+<url>
+
+  <loc>https://practicepractice.net/P/questions/{{topic}}/{{filter}}/{{pt_unique_id}}</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.4</priority>
+
+</url>
+{%endfor%}
+
+	
+	
+
+
+{%for paper in past_papers%}
+{%set subject = paper.q_subject%}
+{%set origin = paper.q_origin%}
+
+
+
+<url>
+
+  <loc>https://practicepractice.net/P/pastpapers/{{subject}}/{{origin}}</loc>
+
+  <lastmod>{{ "now" | date("Y-m-d")}}</lastmod>
+
+  <changefreq>Always</changefreq>
+
+  <priority>0.3</priority>
+
+</url>
+{%endfor%}
+
+
+
+
+
+</urlset> 
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,217 @@
+
+
+
+{%if user_unique_id %}
+{%set unique_id = user_info.user_unique_id%}
+{%set username = user_info.user_uid%}
+{%set first = user_info.user_first%}
+{%set last = user_info.user_last%}
+{%set email = user_info.user_email%}
+{%set memebership_status = user_info.user_member_status%}
+{%set u_type = user_info.user_type%}
+{%set admins = user_info.admins%}
+{%set editors = user_info.editors%}
+{%set affiliates = user_info.affiliates%}
+{%set editors_contract = user_info.editors_contract_status%}
+{%set editors_contract_status = user_info.editors_contract_status%}
+{%set approved_editor = user_info.approved_editor%}
+{%set primary_subject = user_info.EditorPrimary_subject%}
+{%set secondary_subject = user_info.EditorSecondary_subject%}
+{%set vkey = user_info.user_vkey%}
+{%set pp_id = user_info.that_other_id%}
+{%set pp_id_v = user_info.other_id_verification%}
+{%set q_vis = user_info.user_setting_showAttempted%}
+{%set user_level = user_info.user_setting_level%}
+<div id='user_profile_grid'>
+	
+	
+	<ol id='user_information_section'>
+		<div id='user_image'>
+			<img src="https://practicepractice.net/css/img/general.png">
+		</div>
+		
+		
+		<div id='user_whois'>
+			<div>
+				<li>User-name</li>
+				<li>{{username}}</li>
+			</div>
+			
+			<div>
+				<li>First-name</li>
+				<li>{{first}}</li>
+			</div>
+
+			<div>
+				<li>Last-name</li>
+				<li>{{last}}</li>
+			</div>
+			
+			<div>
+				<li>E-mail</li>
+				<li>{{email}}</li>
+			</div>
+			<div>
+				<li>Unique ID</li>
+				<li>{{unique_id}}</li>
+			</div>
+			<div>
+				{%if editors == '0' and admins == '0'%}
+				<li>Membership</li>
+				{%if memebership_status == 0 %}
+					<li style='color:red;'>Inactive</li><br>
+				{% elseif memebership_status == 1 %}
+					<li style='color:green'>Active</li>
+				{%endif%}
+				{%endif%}
+			</div>
+			
+		</div>
+
+		
+	</ol>
+	
+	
+	<ol id='user_settings_section'> 
+		{%if editors == 1 and editors_contract == 0 and approved_editor == 0%}
+			<div>
+				<h5>Sign contract and provide documents</h5>
+				<button type='button' onclick=view.headder_redirect('https://practicepractice.net/P/hub?Editor_application=1') > Link </button>
+			</div>
+		{%endif%}
+		
+		{%if editors == 1 and editors_contract == 1 and approved_editor == 0 %}
+			<div>
+				<h5 style='color:orange;'>Application awaiting approval</h5><br>
+				
+			</div>
+		{%endif%}
+		
+		{%if editors == 1 and editors_contract == 1 and approved_editor == 1 %}
+			<div>
+				<h5 style='color:green;'> You're an approved editor</h5><br>
+				<p>Check the tasks list for tasks to be done</p>
+				<button onclick= view.headder_redirect('https://practicepractice.net/P/contract?editor_unique_id={{unique_id}}&editor_vkey={{vkey}}')>see contract</button>
+				
+				
+				{%if pp_id is not empty and pp_id_v == 1 %}
+				<div>
+					Approved : Payment Method
+					
+				</div>
+				{%elseif pp_id is not empty and pp_id_v == 0%}
+				
+				<div>
+					Awaiting verification : {{pp_id}}
+					<input id='editor_paypalverification_input' placeholder='PayPal Verification Code'/>
+					<button onclick=controller.C_editor_paypalverification_input('editor_paypalverification_input')>Provide 4 digit verification</button>
+				</div>	
+				{%else%}
+				<div>
+					<input id='editor_paypalemail_input' placeholder='PayPal Email'/>
+					<button onclick=controller.C_editor_paypalemail_input('editor_paypalemail_input')>Provide Paypal E-mail</button>
+				</div>	
+				<div>
+					<input id='bnkakaccount_input' placeholder='Bnkak Account number'/>
+					<button onclick=controller.C_editor_bnkakaccount_input('bnkakaccount_input')>Provide Bnkak account</button>
+				</div>		
+				{%endif%}
+				
+				
+				
+				
+				
+				<br><br>
+			</div>
+		{%endif%}
+		
+		
+		
+		{%if (affiliates ==1 and editors == 0)%}
+			<div>
+			
+				{%if pp_id is not empty and pp_id_v == 1 %}
+				<div>
+					Approved : PayPal
+					
+				</div>
+				{%elseif pp_id is not empty and pp_id_v == 0%}
+				
+				<div>
+					Awaiting verification : {{pp_id}}
+					<input id='editor_paypalverification_input' placeholder='PayPal Verification Code'/>
+					<button onclick=controller.C_editor_paypalverification_input('editor_paypalverification_input')>Provide 4 digit verification</button>
+				</div>	
+				{%else%}
+				<div>
+					<input id='editor_paypalemail_input' placeholder='PayPal Email'/>
+					<button onclick=controller.C_editor_paypalemail_input('editor_paypalemail_input')>Provide Paypal E-mail</button>
+				</div>	
+				{%endif%}
+				<br><br>
+			</div>
+		{%endif%}
+		
+		
+		{%if 0 >1%}
+		<div>
+			<h5> Clear my list </h5>
+			<button type='button' onclick=controller.C_delete_mylist_items() > Clear </button>
+		</div>
+		{%endif%}
+		<div>
+			<h5> Select your level </h5>
+			<button type='button' onclick=controller.C_toggle_level('{{unique_id}}') > 
+			{%if user_level == ''%}
+				ALL
+			{%elseif user_level == 'AS'%}
+				AS
+			{%else%}
+				{%if user_level == 'A'%}
+					A-level
+				{%endif%}
+			{%endif%}
+			</button>
+		</div>
+		
+		{%if 0>1%}
+		<div>
+			<h5> Hide/Show Marked Questions </h5>
+			<button type='button' onclick=controller.C_toggle_question_visibility('{{unique_id}}') > 
+			{%if q_vis == 1%}
+				Showing
+			{%else%}
+				Hiding
+			{%endif%}
+			</button>
+		</div>
+		{%endif%}
+	</ol>
+	
+	
+	
+	<ol id='user_actions_section'>
+		<h5 style='padding:3px;'> Reset password </h5>
+		<div id = "usr_nav_element">
+			<input id='password_resetConfirmation' placeholder ='Current password' /><br>
+			<input id='password_resetNew' placeholder ='New password' /><br>
+			<input id='password_resetNew2' placeholder ='Re-new password' /><br>
+			<button type='button' name='submit' onclick=controller.C_Reset_userPassword('password_resetConfirmation','password_resetNew','password_resetNew2') > Reset </button>
+		</div>
+		{%if editors == 1 and editors_contract == 1 and approved_editor == 1 %}
+			<div>
+				<h5> Cancel contract </h5>
+				<button id = 'delete_button' onclick=controller.C_editor_cancel_contract('{{unique_id}}')>Cancel contract</button>
+			</div>
+		{%endif%}
+		<div>
+			<h5> delete account </h5>
+			<button type='button' name='submit' onclick=controller.C_delete_usr_account('{{user_unique_id}}') id = 'delete_button'> Delete </button>
+		</div>
+		
+	</ol>
+	
+	
+</div>
+{%endif%}
+

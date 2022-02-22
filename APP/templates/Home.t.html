@@ -1,0 +1,272 @@
+<div id ='home_wraapper'>
+
+	<br><Br>
+	
+
+	<h1 id='content_section_indic' style='text-align: center;font-size: 12px;'>
+		Welcome to Practice Practice
+	</h1>
+
+
+	
+	<div id ='home_subject_selector'>
+		
+		<div class = 'home_subject_box sub_shadow'>
+			<div class = 'home_subject_org_wrap'>
+				<h2>Maths A|AS level </h2>
+				<div class='home_subject_organiser'>
+					<a class= 'subjectmain' href='/P/maths#content_aligner'><li>Notes</li></a>
+					{%if user.user_member_status == 1%}
+					<a class= 'subjectmain' href='/P/maths#flash_cards'><li>Flashcards</li></a>
+					<a class= 'subjectmain' href='/P/maths#paper_maker'><li>Paper Maker</li></a>
+					
+					<a class= 'subjectmain' href='/P/maths#Q-bank'><li>Q-bank</li></a>
+					
+					{%endif%}
+					<a class= 'subjectmain' href='/P/maths#past-p'><li>Past Papers</li></a>
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class = 'home_subject_box sub_shadow'>
+			<div class = 'home_subject_org_wrap'>
+				<h2>Physics A|AS level </h2>
+				<div class='home_subject_organiser'>
+					<a class= 'subjectmain' href='/P/physics#content_aligner'><li>Notes</li></a>
+					{%if user.user_member_status == 1%}
+					<a class= 'subjectmain' href='/P/physics#flash_cards'><li>Flashcards</li></a>
+					<a class= 'subjectmain' href='/P/physics#paper_maker'><li>Paper Maker</li></a>
+					
+					<a class= 'subjectmain' href='/P/physics#Q-bank'><li>Q-bank</li></a>
+					
+					{%endif%}
+					<a class= 'subjectmain' href='/P/physics#past-p'><li>Past Papers</li></a>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class = 'home_subject_box sub_shadow'>	
+			<div class = 'home_subject_org_wrap'>
+				<h2>Chemistry A|AS level </h2>
+				<div class='home_subject_organiser'>
+					<a class= 'subjectmain' href='/P/chemistry#content_aligner'><li>Notes</li></a>
+					{%if user.user_member_status == 1%}
+					<a class= 'subjectmain' href='/P/chemistry#flash_cards'><li>Flashcards</li></a>
+					<a class= 'subjectmain' href='/P/chemistry#paper_maker'><li>Paper Maker</li></a>
+					
+					<a class= 'subjectmain' href='/P/chemistry#Q-bank'><li>Q-bank</li></a>
+					
+					{%endif%}
+					<a class= 'subjectmain' href='/P/chemistry#past-p'><li>Past Papers</li></a>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class = 'home_subject_box sub_shadow'>	
+			<div class = 'home_subject_org_wrap'>
+				<h2>Biology A|AS level </h2>
+				<div class='home_subject_organiser'>
+					<a class= 'subjectmain' href='/P/biology#content_aligner'><li>Notes</li></a>
+					{%if user.user_member_status == 1%}
+					<a class= 'subjectmain' href='/P/biology#flash_cards'><li>Flashcards</li></a>
+					<a class= 'subjectmain' href='/P/biology#paper_maker'><li>Paper Maker</li></a>
+					
+					<a class= 'subjectmain' href='/P/biology#Q-bank'><li>Q-bank</li></a>
+					
+					{%endif%}
+					<a class= 'subjectmain' href='/P/biology#past-p'><li>Past Papers</li></a>
+				</div>
+			</div>
+		
+		</div>
+		
+		
+	</div>
+	
+	
+	
+	
+	
+
+{%if user.admins >= 0%}
+	<h3 id='content_section_indic' style='font-size: 25px;border-top:1px solid grey;margin-top: 50px;'>
+		<button style='height: 50px;' onclick='controller.C_create_review()'>Give us a quick review</button>	
+	</h3>
+{%endif%}	
+	
+	
+	<br><br><br><br>
+	<h3 id='content_section_indic' style='font-size: 25px;'>
+		Introducing our <p style='color:red;display:inline-block;'>special</p> features
+	</h3>
+	
+	
+	<div id ='home_subject_selector'>
+		
+		<div class = 'home_subject_box'>
+			<h5 style='font-size: 40px;'><p style='color:rgb(46, 137, 255);display:inline-block;'>Progress</p> tracking system</h4><br>
+			<h5 style='font-size: 18px;'>See how far you progress through each chapter with great details, and cover all your knowledge gaps.</h5><br>
+		</div>
+		<div class = 'home_subject_box'>
+			<img src='/css/img/progress.png' />
+		</div>
+		
+		<div class = 'home_subject_box'>
+			<h5 style='font-size: 40px;'><p style='color:rgb(46, 137, 255);display:inline-block;'>Performance</p> tracking system</h4><br>
+			<h5 style='font-size: 18px;'>See how well you perform everyday; by marking the questions you answer we derive your average daily performance.</h5><br>
+		</div>
+		<div class = 'home_subject_box'>
+			<img src='/css/img/elo.png'  / >
+		</div>
+		
+		
+		<div class = 'home_subject_box'>
+			<h5 style='font-size: 40px;'><p style='color:rgb(46, 137, 255);display:inline-block;'>Personalised</p> practice papers</h4><br>
+			<h5 style='font-size: 18px;'>Using our advanced filter forms, you can create your own practice papers, helping you practice your weakest topics on demand.</h5><br>
+		</div>
+		<div class = 'home_subject_box'>
+			<img src='/css/img/q-bank.png'  />
+		</div>
+		
+		
+		<div class = 'home_subject_box'>
+			<h5 style='font-size: 40px;'> <p style='color:rgb(46, 137, 255);display:inline-block;'>Model answers</p> on all of our questions</h5></h4><br>
+			<h5 style='font-size: 18px;'>Instentanious access to detailed step by step solutions on all questions on PracticePractice.</h5><br>
+		</div>
+		<div class = 'home_subject_box'>
+			<img src='/css/img/exam_q.png'  />
+		</div>
+		
+		
+		
+		
+		
+		
+	</div>
+
+	
+	
+	
+	
+	
+	
+	
+	{% set member = user.user_member_status%}
+	<br><br><br><br>
+	<h3 id='content_section_indic' style='font-size: 25px;'>
+		Plans and pricing
+	</h3>
+	<div id ='home_subject_selector'>
+		
+		<div class = 'home_subject_box'>
+			<div class ='plans_price sub_shadow'>
+				
+				
+				<div class ='plan_head'>
+					<h3 id='content_section_indic' style='font-size: 25px;'>
+						Free <br><br>
+						<p style='font-size: 16px;'>£0</p>
+						<p style='font-size:14px;color:grey;'>Signup required</p>
+					</h3>
+				</div>
+				
+				
+				<div class ='plan_body'>
+					<li>✓ Access to all subjects</li>
+					<li>✓ Notes</li>
+					<li>✓ Links to related videos</li>
+					<li>✓ Past Papers</li>
+					<li>✓ Model answers</li>
+					<li>✓ Topic questions</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Chapter Progress tracking</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Question history</li>
+					<li style='height: 150px;'></li>
+				</div>
+				
+				<div style='padding: 15px;'>
+					{%if user is null%}
+					<button class ='plan_button' style="width:100%;" onclick ="view.straight_headder_redirect('/P/sign_page')">Sign up</button>
+					{%elseif member == 0%}
+					 Thank you for Making an account, try the membership!
+					{%else%}
+					Thank you for becoming a member, we hope you enjoy our services.
+					{%endif%}
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<div class = 'home_subject_box'>
+			<div class ='plans_price sub_shadow'>
+				
+				
+				<div class ='plan_head' id='payment_disp'>
+					<h3 id='content_section_indic' style='font-size: 25px;'>
+						Subscriptions<br><br>
+						<p id = 'price_display' style='font-size: 16px;'>£{{mem_month}} /m</p>
+						<p style='font-size:14px;color:grey;'>Signup required</p>
+						<div >
+							<button id = 'month_button' style='background: green;color:white;' onclick ="controller.C_plan_disp(1,{{mem_month}})">1 month</button>
+							<button id = 'sixmonth_button' onclick ="controller.C_plan_disp(6, {{mem_sixmonths}})">6 months</button>
+							<button id = 'ninemonth_button'  onclick ="controller.C_plan_disp(9, {{mem_ninemonths}})">9 months</button>
+						</div>
+					</h3>
+				</div>
+				
+				
+				<div class ='plan_body'>
+					<li>✓ Notes</li>
+					<li>✓ Links to related videos</li>
+					<li>✓ Past papers</li>
+					<li>✓ Model answers</li>
+					<li>✓ Topic questions</li>
+					
+					
+					<li style='color:rgb(46, 137, 255);'>✓ Performance tracking</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Full Progress tracking</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Annotated Mindmap</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Paper maker tool</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Q-bank tool</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Paper print mode</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Question history</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Spaced repetition tool</li>
+					<li style='color:rgb(46, 137, 255);'>✓ Sorted Past paper questions</li>
+					<li style='color:rgb(46, 137, 255);'>+ Anything new</li>
+					<li style='height: 150px;'></li>
+					
+				</div>
+				<div style="font-size: 14px;text-align: center;">Subscription will <p style="display:inline-block;color:red;">NOT</p> renew automatically. None of your data will be lost; you can rejoin and still have your progress.</div>
+				<div style='padding: 15px;'>
+					<p></p>
+					{%if user is null%}
+					<button class ='plan_button' style="width:100%;height:100%;" onclick ="view.straight_headder_redirect('/P/sign_page')">Sign up</button>
+					{%elseif member == 0%}
+						
+					 <button class ='plan_button' style="background: green;color:white; width:100%;height:100%;" onclick ="view.straight_headder_redirect('/P/checkout')">Join now</button>
+					{%else%}
+					Thank you for becoming a member, we hope you enjoy our services.
+					{%endif%}
+				</div>
+				
+			</div>
+		</div>
+		
+		
+	</div>
+	<section style='height: 30vw;'></section>
+
+
+
+
+
+
+
+
+
+
+</div>

@@ -1,0 +1,29 @@
+<div id ='spec_form_container'>
+	
+	<div id='Chapter_list'>
+		
+		<a href="#content_aligner" id = 'content_aligner' style='color:red;'><h2 id='content_section_indic' >Content</h2></a>
+		
+		{%if  admin and map_moduel == null and map_chapter == null%}
+		<button type='button' onclick=controller.C_add_newSpec_moduel('{{subject}}','00_New') style='display: block;margin:auto;margin-bottom: 5px;'>New_moduel</button>
+		{%endif%}
+		
+		<div name='pt_chapter' id='pt_chapter_var' class='Chapters_listed' style='display:none;'>
+		</div>
+		<div id="jsmind_container" style='width:100%;height:750px;margin-bottom: 50px;'></div>
+		
+		<input name='pt_subject' type='hidden' value="{{subject}}" />			
+		<script>
+			setTimeout(function(){  controller.C_make_mindmap('{{subject}}','{{map_moduel}}','{{map_chapter}}'); }, 1250);
+		</script>
+	</div>
+	
+	
+
+</div>
+
+	
+
+
+
+	
