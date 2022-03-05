@@ -18,11 +18,8 @@ RUN update-alternatives --set php /usr/bin/php7.2
 RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php
 RUN php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 #app periferals
-ADD ./includes/APP_apache.conf /etc/apache2/sites-available/000-default.conf 
-ADD ./includes/php.ini /etc/php/7.2/apache2/php.ini
-WORKDIR /var/www/html 
-RUN composer require
-RUN composer dump-autoload
+ADD ./extras/includes/APP_apache.conf /etc/apache2/sites-available/000-default.conf 
+ADD ./extras/includes/php.ini /etc/php/7.2/apache2/php.ini
 #Groups, Permissions and Ownership
 #expose and run
 EXPOSE 80 

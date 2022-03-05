@@ -13,7 +13,7 @@ services:
     ports:
       - '3307:3306'
     volumes: 
-      - $PWD/data/mysql_db:/var/lib/mysql
+      - $PWD/extras/data/mysql_db:/var/lib/mysql
   phpmyadmin:
     depends_on:
       - db_mysql
@@ -33,6 +33,7 @@ services:
     depends_on:
       -  db_mysql
     build: .
+    restart: always
     container_name: old_pp
     networks: 
       - practicepractice
@@ -40,7 +41,9 @@ services:
       - '8006:80'
     volumes: 
       - $PWD/APP:/var/www/html/
-      - $PWD/data/specifications:/var/www/html/specifications
+      - $PWD/extras/data/specifications:/var/www/html/specifications
+    tty: true
+    command: bash -c "apache2ctl -D FOREG && cd /var/www/html && composer install && composer require"
 
 networks:
     practicepractice:
