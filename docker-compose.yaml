@@ -43,7 +43,7 @@ services:
       - $PWD/APP:/var/www/html/
       - $PWD/extras/data/specifications:/var/www/html/specifications
     tty: true
-    command: bash -c "apache2ctl -D FOREG && cd /var/www/html && composer install && composer require"
+    command: bash -c "apache2ctl -D FOREGROUND && cd /var/www/html && composer install && composer require && chown -R www-data:www-data /var/www/html/vendor"
 
 networks:
     practicepractice:

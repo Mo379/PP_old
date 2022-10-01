@@ -1484,7 +1484,6 @@ class controller extends model {
 		model.xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				var node_tree = this.responseText;
-				return;
 				var json = JSON.parse(node_tree);
 				//
 				var avg = json[json.length -1];
